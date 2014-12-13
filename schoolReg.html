@@ -1,0 +1,334 @@
+<!docktype html>
+<html>
+<title>SCHOOL REG | VEGAM</title>
+<link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+
+
+
+<head>
+<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.2.min.js"></script>
+</head>
+
+<style type="text/css">
+body {
+		background-image:url(m.jpg);
+		background-repeat:no-repeat;
+		background-size: 100%;
+		position: relative;
+		
+}
+
+div.total
+{
+	margin: auto;
+}
+div.header
+{
+	position: fixed;
+	top: 0;
+	display: block;
+}
+
+
+h1 {	color : Green;
+		position:fixed;
+		top:1.75em ;
+		left:6em;
+		font-family:GALLERY; 
+		font-size:70;}
+		
+.s {	color: Black;
+		font-size:43;
+		font-family:ALGERIAN;
+		position:fixed;
+		display: block;
+		top:4.4em; 
+		left:360px;}	
+	
+div img{
+		margin: auto;
+		display: block;
+		position: fixed;
+		left: 71%;
+		top: 13em;
+}
+
+			
+.u {color:#00248F;
+		margin: auto;
+		font-size:26;
+		font-family:ALGERIAN;
+		position:fixed;
+		top:11em; left:400px;}
+.p {color:#00248F;
+		font-size:26;
+		margin: auto;
+		font-family:ALGERIAN;
+		position:fixed;
+		top:12.5em; left:400px;}	
+		
+.cp {color:#00248F;
+		font-size:26;
+		margin: auto;
+		font-family:ALGERIAN;
+		position:fixed;
+		top:14em; left:399px;}	
+
+.sc {color:#00248F;
+		font-size:26;
+		margin: auto;
+		font-family:ALGERIAN;
+		position:fixed;
+		top:15.5em; left:402px;}			
+
+.a {color:#00248F;
+		font-size:26;
+		margin: auto;
+		font-family:ALGERIAN;
+		position:fixed;
+		top:17em; left:401px;}			
+			
+.c {color:#00248F;
+		font-size:26;
+		margin: auto;
+		font-family:ALGERIAN;
+		position:fixed;
+		top:18.5em; left:400px;}	
+
+
+	
+		
+.k {color:#00248F;
+		font-size:12;
+		font-family:ALGERIAN;
+		position:fixed;
+		bottom:85px; left:420px;}			
+a
+{
+	text-decoration:none;
+	position: fixed;
+	display: block;
+	top: 32.5em;
+	left: 38em;
+}
+.button
+{
+	background-color: White;
+	padding: 8px;
+	color: Black;
+	border-radius: 1em;
+	border: 1px solid #00248F;
+	text-decoration:none;
+	position: fixed;
+	font-family: verdana;
+	display: block;
+	top: 32.8em;
+	left: 38em;
+	box-shadow: inset 0em -1em 1em 0em rgba(0,0,0,0.5);
+	-moz-transition: all 0.35s ease-in-out;
+	-webkit-transition: all 0.35s ease-in-out;
+}
+.button:hover
+{
+	cursor: pointer;
+	background-color: Green;
+	color: White;
+	box-shadow: inset 0em -1em 2em 0em rgba(0,0,0,0.5);
+	-moz-transition: all 0.35s ease-in-out;
+	-webkit-transition: all 0.35s ease-in-out;
+}
+
+		
+.n 	{	position:fixed;
+		background-color: silver;
+		height: 3em;
+		top: 94%;
+		left: 0;
+		right: 0;
+}
+.d { color:Black;
+		font-size:18;
+		font-family: Times New Roman;
+		position:fixed;
+		bottom:-0.8em;
+		left: 20em;
+			}
+			
+</style>
+</head>
+<body>
+
+<div class="total">
+<h1> VEGAM 2k15</h1>
+<p class="s"> NEW SCHOOL REGESTRATOIN<p>
+
+<div><img src="k.png"  ></div>
+<form id="demo">
+
+<p class="u"> USER NAME &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp:   <input type="text" id="username"/>
+			
+<p class="p"> PASSWORD &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp :   <input type="password" id="pass" /> 
+<p class="cp"> CONFIRM PASSWORD&nbsp :   <input type="password" id="conpass" /> 
+
+<p class="sc"> SCHOOL NAME  &nbsp &nbsp &nbsp  &nbsp &nbsp  &nbsp    :    <input type="text" id="school" />
+
+<p class="a"> ADDRESS &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp:   <input type="text" id="address" /> 
+
+<p class="c"> CONTACT NUMBER &nbsp &nbsp  &nbsp:   <input type="text" id="contact" /> 
+
+<br />
+<br />
+</form>
+
+<div onclick="check()"><div class="button" >REGISTER</div></div>
+
+<div class="n"></div>
+<center><p class="d">Chennai Social Service- Powered by <b>INDIAN NATIONAL DEVELOPERS</b></p>
+<div>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+function display(){
+	var SchoolReg = Parse.Object.extend("SchoolReg");
+	var name = SchoolReg.get("USERNAME").value;
+	console.log(name);
+	
+	/*
+	var pass = 
+	var conpass =
+	var school = 
+	var address = 
+	var contact = 
+    var nameValue = name.value;
+	var passValue = pass.value;
+	var conpassValue = conpass.value;
+	var schoolValue = school.value;
+	var addressValue = address.value;
+	*/
+};
+ 	
+function retrieve(){
+	alert("RETRIEVING...");
+
+
+	var SchoolReg = Parse.Object.extend("SchoolReg");
+	alert("STARTED...");
+	var query = new Parse.Query(SchoolReg);
+	alert("STARTED...");
+	/*var GameScore = Parse.Object.extend("GameScore");
+	var query = new Parse.Query(GameScore);*/
+	query.get("kkZNYwCB9v", {
+	success: function(SchoolReg) {
+		// The object was retrieved successfully.
+		alert("Retrieved");
+		console.log("Retrieved");
+		display();
+		
+	},
+	error: function(object, error) {
+		alert(" NOt able to be Retrieved");
+		console.log("Not able to be Retrieved");
+		// The object was not retrieved successfully.
+		// error is a Parse.Error with an error code and message.
+	}
+	});  
+};
+	
+function parse(){	
+	var name = document.getElementById("username");
+	var pass = document.getElementById("pass");
+	var conpass = document.getElementById("conpass");
+	var school = document.getElementById("school");
+	var address = document.getElementById("address");
+	var contact = document.getElementById("contact");
+    var nameValue = name.value;
+	var passValue = pass.value;
+	var conpassValue = conpass.value;
+	var schoolValue = school.value;
+	var addressValue = address.value;
+	var contactValue = contact.value;
+	
+	Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+	alert("INITIALIZED");
+	
+	var SchoolReg = Parse.Object.extend("SchoolReg");
+	alert("STARTED...");
+	var schoolReg = new SchoolReg();
+	
+	/*schoolReg.set("USERNAME","THINA");
+	schoolReg.set("PASSWORD","ASDF");
+	schoolReg.set("SCHOOL","THINA");
+	schoolReg.set("ADDRESS","THINA");
+	schoolReg.set("CONTACT","THINA"); */
+	
+	schoolReg.set("USERNAME",document.getElementById("username").value);
+	schoolReg.set("PASSWORD",document.getElementById("pass").value);
+	schoolReg.set("SCHOOL",document.getElementById("school").value);
+	schoolReg.set("ADDRESS",document.getElementById("address").value);
+	schoolReg.set("CONTACT",document.getElementById("contact").value);
+	schoolReg.save(null, {
+			success: function(schoolReg) {
+					// Execute any logic that should take place after the object is saved.
+					console.log("SUCCESS");
+					alert('New object created with objectId: ' + schoolReg.id);
+					retrieve();
+			},
+			error: function(schoolReg, error) {
+					// Execute any logic that should take place if the save fails.
+					// error is a Parse.Error with an error code and message.
+					console.log("ERROR");
+					alert('Failed to create new object, with error code: ' + error.message);
+			}
+			});
+};
+
+function check(){
+	var name = document.getElementById("username");
+	var pass = document.getElementById("pass");
+	var conpass = document.getElementById("conpass");
+	var school = document.getElementById("school");
+	var address = document.getElementById("address");
+	var contact = document.getElementById("contact");
+    var nameValue = name.value;
+	var passValue = pass.value;
+	var conpassValue = conpass.value;
+	var schoolValue = school.value;
+	var addressValue = address.value;
+	
+	var contactValue = contact.value;
+	if(nameValue.length<6)
+		alert("USERNAME should contain atleast 6 characters!!");
+		else if(passValue.length<6)
+			alert("PASSWORD should contain atleast 6 characters!!");
+			else if(conpassValue != passValue)
+				alert("PASSWORD does not match!!");
+				else if(schoolValue.length<5)
+					alert("This doesn't seem to a Valid School Name!");
+					else if(addressValue.length<6)
+						alert("This doesn't seem to a Valid Address!");
+						else if (contactValue == "") 
+							alert("You didn't enter a phone number.");
+							else if (isNaN(contactValue)) 
+								alert("The phone number contains illegal characters.");
+								else if (!(contactValue.length == 10)) 
+									alert("The phone number is the wrong length. \nPlease enter 10 digit mobile no.");
+									else{
+										alert("DONE PERFECTLY!!!");
+										parse();
+									}
+									
+										
+  	};
+	
+	
+	
+
+	/*
+
+	*/
+</script>						
+
+							
