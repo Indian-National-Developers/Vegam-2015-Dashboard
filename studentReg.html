@@ -7,10 +7,10 @@
 <body>
 <h1> VEGAM 2k15</h1>
 <p class="registration"> Student Registeration<p>
-
+ 
 <div class="content">
-	<div class="txt">STUDENT NAME</div><div class="box"><input onfocusin="hideuser()" onfocusout="displayuser()"  type="text" id="username" value="&nbsp &nbsp &nbsp &nbsp &nbsp USER NAME" /></div>
-	<div class="txt">ROLL NUMBER</div><div class="box"><input onfocusin="hideroll()" onfocusout="displayroll(); type="text" id="roll" value="&nbsp &nbsp &nbsp &nbsp ROLL NUMBER" /></div>
+	<div class="user">STUDENT NAME: </div><div class="box"><input type="text" id="username" /></div>
+	<div class="roll">ROLL NUMBER: </div><div class="box"><input type="text" id="roll"/></div>
 	<div class="gender">
 		<select id="drop1">
 			<option value=" ">&nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp GENDER &nbsp &nbsp &nbsp &nbsp &nbsp </option>
@@ -48,16 +48,19 @@
 			<option value="25"> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp 25 &nbsp &nbsp </option>
 		</select>
 	</div>
-	<div class="cat">
-		<select id="drop3">
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp CATEGORY &nbsp &nbsp &nbsp</option>
-			<option value="MR"> &nbsp &nbsp  &nbsp Mentally Retarded &nbsp  </option>
-			<option value="VI"> &nbsp &nbsp  &nbsp Visually Impaired &nbsp   </option>
-			<option value="HI"> &nbsp &nbsp  &nbsp Hearing Impaired &nbsp  </option>
-			<option value="MD"> &nbsp &nbsp  &nbsp Multi Disordered &nbsp  </option>
-		</select>
+	<div class="cat">CATEGORY &nbsp &nbsp &nbsp:
+			<div class="radio">
+					<form action="" onclick="level()">
+						<input type="radio" name="category" id="MR" value="MR">Mentally Retartded
+						<input type="radio" name="category" id="VI" value="VI">Visually Impaired<br>
+						<input type="radio" name="category" id="HI" value="HI">Hearing Impaired &nbsp&nbsp
+						<input type="radio" name="category" id="MD" value="MD">Multi Disordered<br>
+					</form>
+			
+			</div>
 	</div>
-	<div class="level">
+	
+	<div id="mrlevel">
 		<select id="drop4">
 			<option value="0"> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp LEVEL &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</option>
 			<option value="1"> &nbsp &nbsp &nbsp &nbsp  &nbsp MILD &nbsp &nbsp </option>
@@ -65,56 +68,14 @@
 			<option value="3"> &nbsp &nbsp &nbsp &nbsp  &nbsp SEVERE &nbsp &nbsp </option>
 		</select>
 	</div>
+	<div id="vilevel">
+		<select id="drop5">
+			<option value="0"> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp LEVEL &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp</option>
+			<option value="1"> &nbsp &nbsp &nbsp &nbsp  &nbsp Partially Blind &nbsp &nbsp </option>
+			<option value="2"> &nbsp &nbsp &nbsp &nbsp  &nbsp Totally Blind &nbsp &nbsp  </option>
+		</select>
+	</div>
 </div>
-<!--
-<p class="name"> STUDENT NAME &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  : 
-
-<p class="roll"> ROLL NUMBER  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  : <input type="text" name="USER NAME" />
-<div ><img src="k.png" /></div>
-
-
-
-
-
-<form>
-	<p class="cat">CATEGORY &nbsp &nbsp &nbsp &nbsp	&nbsp &nbsp &nbsp &nbsp&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp :&nbsp 
-	<select name="actvities">
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp ----------- &nbsp &nbsp </option>
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp MR &nbsp &nbsp </option>
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp VI &nbsp &nbsp  </option>
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp HI &nbsp &nbsp </option>
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp MD &nbsp &nbsp </option>
-		</select>
-		
-	<p class="level">DISABILITY LEVEL:	&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp :&nbsp 
-	<select name="actvities">
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp ----------- &nbsp &nbsp </option>
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp MILD &nbsp &nbsp </option>
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp MODERATE &nbsp &nbsp  </option>
-			<option value=" "> &nbsp &nbsp &nbsp &nbsp  &nbsp SEVERE &nbsp &nbsp </option>
-		</select>
-
-			
-	<p class="event">EVENTS:(choose any two)&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 	
-	
-			Event 1<input type="checkbox" name= "event" value="event 1" /> 
-			Event 2<input type="checkbox" name= "event" value="event 2" />
-			Event 3<input type="checkbox" name= "event" value="event 3" />
-			<br/> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
-			&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 	&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
-			&nbsp &nbsp &nbsp &nbsp &nbsp 	&nbsp &nbsp  		 		 	
-			Event 4<input type="checkbox" name= "event" value="event 4" />
-			Event 5<input type="checkbox" name= "event" value="event 5" />
-			Event 6<input type="checkbox" name= "event" value="event 6" />
-			<br/> &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
-			&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 	&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp 
-			&nbsp &nbsp &nbsp &nbsp &nbsp 	&nbsp &nbsp 
-			Event 7<input type="checkbox" name= "event" value="event 7" />
-			Event 8<input type="checkbox" name= "event" value="event 8" />	
-			Event 9<input type="checkbox" name= "event" value="event 9" />
-</form>
-
--->
 
 <a href=""><div class="button">SAVE & NEXT </div></a>
 
@@ -143,11 +104,38 @@ function hideroll(){
 	document.getElementById("roll").value=" ";
 	
 };
-function level(){
-	if(document.getElementById("drop3").value === "VI"){
-		document.getElementById("drop4").value=" ";
+
+function level() {
+
+
+if(document.getElementById('MR').checked) {
+  document.getElementById("mrlevel").style.display = 'block';
+  document.getElementById("vilevel").style.display = 'none';
+}else if(document.getElementById('VI').checked) {
+  document.getElementById("vilevel").style.display = 'block';
+  document.getElementById("mrlevel").style.display = 'none';
+}else{
+	document.getElementById("vilevel").style.display = 'none';
+	document.getElementById("mrlevel").style.display = 'none';
+}
+
+};
+/*
+function showHide1() {
+	if (document.getElementById("drop3") != "MR") {
+		
+		//if (document.getElementById("drop4").style.display != 'none'){
+		if (document.getElementById("drop3") != "VI"){
+			document.getElementById("drop4").style.display = 'none';
+			alert("if");
+		}
+		else {
+			document.getElementById("drop4").style.display = 'inline';
+			alert("else");
+		}
 	}
 };
+*/
 </script>
 
 <style>
@@ -181,12 +169,25 @@ div img{
 		top: 13em;
 }
 
+#drop4{
+	display: block;
+}
+
 			
-.username {color:#00248F;
-		font-size:26;
-		font-family:ALGERIAN;
+#username {color:#00248F;
 		position:fixed;
-		top:270px; left:400px;}
+		top: 21.5em;
+		margin-left: -8em;
+}
+
+#roll {color:#00248F;
+		position:fixed;
+		top: 21.5em;
+		margin-left: -15em;
+	}
+
+		
+		
 .password {color:#00248F;
 		font-size:26;
 		font-family:ALGERIAN;
@@ -248,7 +249,7 @@ a
 	-moz-transition: all 0.35s ease-in-out;
 	-webkit-transition: all 0.35s ease-in-out;
 	top: 35em;
-	left: 38em;
+	left: 36.4em;
 }
 .button:hover
 {
@@ -354,41 +355,65 @@ a
 		position: fixed;
 		margin-left: 6.6em;
 		margin-top: 2em;
-
 }
+
+.radio{
+	font-family: Times New Roman;
+	font-size: 0.8em;
+	display: inline-block;
+	
+}
+
+
+
 .gender{
+
 		display: block;
 		position: fixed;
-		top: 17em;
-		margin-left: 34.5em;
-		margin-bottom: 0.5em;
-		margin-top: 10em;
+		top: 13em;
+		margin-top: 9em;
+		margin-left: 14.5em;
 
+			
 }
-.level{
-		display: block;
-		position: fixed;
-		margin-top: 5em;
-		padding-left: 6.2em;
 
-}
 .age{
 		display: block;
 		position: fixed;
-		top: 17em;
-		margin-top: 8em;
-		margin-left: 34.5em;
+		top: 13em;
+		margin-top: 9em;
+		margin-left: 27.8em;
 
 }
-.txt {	
-		display: none;
-		position: fixed;
+.user {	
+		display: block;
+		position: absolute;
 		color:#00248F;
 		font-size:26;
 		font-family:ALGERIAN;
 		top: 10.5em;
-		margin-left: 21em;
+		margin-left: 9em;
 }
+.roll {	
+		display: block;
+		position: absolute;
+		color:#00248F;
+		font-size:26;
+		font-family:ALGERIAN;
+		margin-top: -1.5em;
+		margin-left: 12em;
+}
+
+.cat {	
+		display: block;
+		position: absolute;
+		color:#00248F;
+		font-size:26;
+		font-family:ALGERIAN;
+		margin-top: -3.5em;
+		margin-left: 12.5em;
+}
+
 .box {
 		top: 16.7em;
 		display: inline-block;
@@ -405,14 +430,22 @@ a
 		top:320px; left:405px;}
 
 
-.level {color:#00248F;
-		font-size:26;
-		display: block;
+#mrlevel{
+
+		display: none;
 		position: fixed;
-		font-family:ALGERIAN;
-		position:fixed;
-		top:370px; left:399px;}		
-		
+		top: 13em;
+		margin-top: 14em;
+		margin-left: 14.5em;
+}	
+#vilevel{
+
+		display: none;
+		position: fixed;
+		top: 13em;
+		margin-top: 14em;
+		margin-left: 14.5em;
+}		
 .cat {color:#00248F;
 		font-size:26;
 		display: block;
