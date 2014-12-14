@@ -19,7 +19,7 @@
 
                 Parse.User.logIn(uName, pass, {
                     success: function(user) {
-                        sessionStorage.user     =   JSON.stringify(user);
+                        sessionStorage.school   =   JSON.stringify(user);
                         window.location         =   "schoolDashboard.html";
                     },
                     error: function(user, error) {
@@ -37,7 +37,7 @@
 
             <!-- Top section contains the Vegam Title and Page Title -->
             <div class="header"> 
-                <h1> Vegam 2k15 </h1>
+                <h1> <a href="index.html"> Vegam 2k15 </a> </h1>
                 <h3> Home </h3>
             </div>
 

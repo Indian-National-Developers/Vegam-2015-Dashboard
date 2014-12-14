@@ -16,6 +16,10 @@ a {
     text-decoration     :   none;
 }
 
+.header a:visited {
+    color               :   green;
+}
+
 h1, h2, h3 {
     margin-top          :   0px;
     margin-bottom       :   0px;

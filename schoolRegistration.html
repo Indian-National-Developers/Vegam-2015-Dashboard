@@ -14,7 +14,7 @@
 
         <!-- Top section contains the Vegam Title and Page Title -->
         <div class="header"> 
-            <h1> Vegam 2k15 </h1>
+            <h1> <a href="index.html"> Vegam 2k15 </a> </h1>
             <h3> School Registration </h3>
         </div>
 
@@ -28,7 +28,7 @@
                 <div class="smallLabel"> Email          </div> <input style="width: 34%;" type="text"       id='email' /> <br/> <br/>
                 <div class="smallLabel"> Contact No.    </div> <input style="width: 34%;" type="text"       id='contact' /> <br/> <br/>
                 <div class="smallLabel"> Address        </div> <textarea id="address" rows=3 style="width: 34%;"> </textarea> <br/> <br/>
-                <div class="button" onclick="registerButtonClick()" style="margin-left:20%">Register</div>
+                <div class="button" onclick="checkButtonClick()" style="margin-left:20%"> Register </div>
             </div>
         </div>
 
@@ -76,44 +76,37 @@ function registerButtonClick(){
     });
 };
 
-function check(){
+function checkButtonClick(){
 
-	var name = document.getElementById("username");
-	var pass = document.getElementById("pass");
-	var conpass = document.getElementById("conpass");
-	var school = document.getElementById("school");
-	var address = document.getElementById("address");
-	var contact = document.getElementById("contact");
-    var nameValue = name.value;
-	var passValue = pass.value;
-	var conpassValue = conpass.value;
-	var schoolValue = school.value;
-	var addressValue = address.value;
+	var name            =   document.getElementById("schoolname").value;
+	var branch          =   document.getElementById("branchname").value;
+	var pass            =   document.getElementById("password").value;
+	var con             =   document.getElementById("conpass").value;
+	var email           =   document.getElementById("email").value;
+	var contact         =   document.getElementById("contact").value;
+	var address         =   document.getElementById("address").value;
 	
-	var contactValue = contact.value;
-	if(nameValue.length<6)
-		alert("USERNAME should contain atleast 6 characters!!");
-		else if(passValue.length<6)
-			alert("PASSWORD should contain atleast 6 characters!!");
-			else if(conpassValue != passValue)
-				alert("PASSWORD does not match!!");
-				else if(schoolValue.length<5)
-					alert("This doesn't seem to a Valid School Name!");
-					else if(addressValue.length<6)
-						alert("This doesn't seem to a Valid Address!");
-						else if (contactValue == "") 
-							alert("You didn't enter a phone number.");
-							else if (isNaN(contactValue)) 
-								alert("The phone number contains illegal characters.");
-								else if (!(contactValue.length == 10)) 
-									alert("The phone number is the wrong length. \nPlease enter 10 digit mobile no.");
-									else{
-										parse();
-									}
-									
-										
-  	};
+	if(name.length<5)
+        alert("Schoolname should contain atleast 5 characters!!");
+    else if(branch.length<2)
+        alert("Branchname should contain atleast 2 characters!!");
+    else if(pass.length<4)
+        alert("PASSWORD should contain atleast 4 characters!!");
+    else if(con != pass)
+        alert("PASSWORD does not match!!");
+    else if(email.length<6)
+        alert("This doesn't seem to a Valid email-id");
+    else if (contact== "") 
+        alert("You didn't enter a phone number.");
+    else if (isNaN(contact)) 
+        alert("The phone number contains illegal characters.");
+    else if (!(contact.length == 10)) 
+        alert("The phone number is the wrong length. \nPlease enter 10 digit mobile no.");
+    else if(address.length<6)
+        alert("This doesn't seem to a Valid Address!");
+    else{
+        registerButtonClick();
+    }
+};
 	
 </script>						
-
-							
