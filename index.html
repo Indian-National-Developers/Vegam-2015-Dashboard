@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Sunil, Priya, Thina, saiy2k">
+        <title> Home | Vegak 2k15 </title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="vegam.css"/>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.parse.com/downloads/javascript/parse-1.3.2.js"></script>
+        <script type="text/javascript">
+
+            Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
+
+            function loginButtonClick() {
+                var uName       =   document.getElementById('userNameTextBox').value;
+                var pass        =   document.getElementById('passwordTextBox').value;
+
+                Parse.User.logIn(uName, pass, {
+                    success: function(user) {
+                        sessionStorage.user     =   JSON.stringify(user);
+                        window.location         =   "schoolDashboard.html";
+                    },
+                    error: function(user, error) {
+                        alert('Wrong username or password');
+                        console.log(error); 
+                    }
+                });
+            }
+
+        </script>
+
+    </head>
+
+    <body>
+
+            <!-- Top section contains the Vegam Title and Page Title -->
+            <div class="header"> 
+                <h1> Vegam 2k15 </h1>
+                <h3> Home </h3>
+            </div>
+
+            <!-- Main cotent section that contains all the page controls -->
+            <div class="content">
+                <div class="halfColumn">
+                    <img src="./homeBanner.jpg" width="100%" />
+                    <p style="position:absolute; float: left; left: 17%; top:40%">
+                        Venue : YMCA School <br/> <br/> <br/>
+                        Date: Feb dd, 2015 10:00 AM
+                    </p>
+                </div>
+
+                <div class="halfColumn" style="width: 30%; padding:4%" >
+                    <div class="smallLabel"> User Name </div> <input type="text" id="userNameTextBox" /> <br/> <br/>
+                    <div class="smallLabel"> Password  </div> <input type="password" id='passwordTextBox' /> <br/> <br/>
+                    <div class="button" onclick="loginButtonClick()">Login</div>
+                    <a href="./schoolRegistration.html" class="button">Register</a>
+                </div>
+            </div>
+
+            <!-- Floating logo stick to the bottom right of the screen -->
+            <img class="logo" src="k.png"/>
+
+            <!-- Footer that sticks to the bottom of the screen (not document) -->
+            <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a> </p>
+
+    </body>
+</html>
