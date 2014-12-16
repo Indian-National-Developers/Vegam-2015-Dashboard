@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Sunil, Priya, Thina, saiy2k">
-        <title> Home | Vegak 2k15 </title>
+        <title> Home | Vegam 2k15 </title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
         <link type="text/css" rel="stylesheet" href="vegam.css"/>
 
@@ -12,21 +12,30 @@
         <script type="text/javascript">
 
             //Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
-            Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+            $( document ).ready(function() {
+                Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
 
-            var UserClass = Parse.Object.extend("User");
-            var query = new Parse.Query(UserClass);
-            query.find({
-                success: function(results) {
-                    userSelect  =   document.getElementById('userNameTextBox');
-                    results.forEach(function(user) {
-                        userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
-                        console.log(user.get('username'));
-                    });
-                }, error: function(error) {
-                }
+                var UserClass = Parse.Object.extend("User");
+                var query = new Parse.Query(UserClass);
+                query.find({
+                    success: function(results) {
+                        userSelect  =   document.getElementById('userNameTextBox');
+                        results.forEach(function(user) {
+                            userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
+                            console.log(user.get('username'));
+                            display();
+                        });
+                    }, error: function(error) {
+                    }
+                });
+
+                $('#passwordTextBox').keypress(function(e) {
+                    if(e.which == 13) {
+                        loginButtonClick();
+                    }
+                });
+
             });
-
 
             function loginButtonClick() {
                 var uName       =   document.getElementById('userNameTextBox').value;
@@ -43,7 +52,32 @@
                     }
                 });
             }
-
+			
+			
+			function display(){
+				var User = Parse.Object.extend("User");
+				var query = new Parse.Query(User);
+				query.count({
+					success: function(count) {
+						// The count request succeeded. Show the count	
+						document.getElementById("schoolnum").innerHTML = ("Number of Registered Schools: " + count);
+					},
+					error: function(error) {
+                        console.log("school count request faild");
+					}
+				});
+				var St = Parse.Object.extend("Student");
+				var squery = new Parse.Query(St);
+				squery.count({
+					success: function(count) {
+						// The count request succeeded. Show the count	
+						document.getElementById("studnum").innerHTML = ("Number of Registered Students: " + count);
+					},
+					error: function(error) {
+                        console.log("school count request faild");
+					}
+				});
+            }
         </script>
 
     </head>
@@ -58,22 +92,61 @@
 
             <!-- Main cotent section that contains all the page controls -->
             <div class="content">
-                <div class="halfColumn">
-                    <img src="./homeBanner.jpg" width="100%" />
-                    <p style="position:absolute; float: left; left: 17%; top:40%">
-                        Venue : YMCA School <br/> <br/> <br/>
-                        Date: Feb dd, 2015 10:00 AM
-                    </p>
+                <div class="halfColumn" style="border: 2px solid #ccc; padding: 8px; color: 222">
+                        Greetings from Chennai Social Service, we are a registered NGO working with different sections of society in the Chennai city over last 8 years. As part of our commitment towards differently–abled students participation in extracurricular events we have been organizing competitive sports events since 2009. We take pride in encouraging differently-abled students to express their sportsmanship on the field and also to experience the mingling of athletes with other school competitors, welcoming you all to take part in Vegam 2015. 
+                        <br/>
+                        <br/>
+                        <b>
+                        VENUE - YMCA college of physical Education, Nandhanam <br/> <br/>
+                        Date - Saturday, 7th February 2015. <br/> <br/>
+                        <b>A post on <a href="http://chennaisocialservice.blogspot.in/2014/03/vegam-2014.html">Vegam 2014</a></b> <br/>
+                        </b> <br/><br/>
+
+                        <h2> How to use this portal? </h2>
+                        <h3>Home Page</h3>
+                        As the first step, you need to register your school for the Vegam event by clicking the <b>Register School</b> button. The <b>School Registration</b> page is displayed. On this page, you need to enter your school details and click <b>Register</b>.  <br/>
+                        After registering your school, you need to register your students. To do this, on the <b>Vegam 2k15 Home page</b>, select your school name and enter your password. Next, click the <b>Login</b> button. The <b>Student Registration</b> page is displayed. On this page, you need to enter the details of your students who are planning to attend the event and then click <b>Save</b><br/>
+                        In case you forget the password, click the <b>Forgot Password</b> button.  Enter your e-mail address that you used during the registration process, and then click the <b>Reset button</b>. The password reset link is sent to your e-mail ID. Click the link and then rest your password. <br/>
+                        <br/>
+                        <br/>
+                        <h3>School Registration page </h3>
+                        To register your school for the Vegam 2k15 event, enter the required details in each field on the <b>School Registration</b> page. After entering information in each field, click the <b>Register button</b>. 
+                        <br/>
+                        <br/>
+                        <h3>Student Registration page </h3>
+                        To register your students for the Vegam 2k15 event, enter information about each student in the <b>Student Registration</b> page. <br/>
+                        The options available in the Disability field are MR, MD, HI, VI. <br/>
+                        <ul>
+                            <li> MR - Mentally Retarded
+                            <li> MD - Multiple Disability
+                            <li> HI – Hearing Impaired
+                            <li> VI – Visually Impaired
+                        </ul>
+                        In the <b>D.Level field</b>, select the extent of disability. <br/>
+                        The events are displayed based on the information you select in the previous fields. Each student needs to participate in at least two events. After entering the details for the students, click <b>Save</b>.
+                    <br/>
+                    <br/>
+                    <br/>
                 </div>
 
                 <div class="halfColumn" style="width: 30%; padding:4%" >
-                    <div class="smallLabel"> School Name </div> <select id="userNameTextBox" style="width: 125px"/>
+                    <div class="smallLabel"> School Name </div> <select id="userNameTextBox" style="width: 160px"/> 
                     </select> <br/> <br/>
-                    <div class="smallLabel"> Password  </div> <input type="password" id='passwordTextBox' /> <br/> <br/>
-                    <div class="button" onclick="loginButtonClick()">Login</div>
+                    <div class="smallLabel"> Password  </div> <input type="password" id='passwordTextBox' style="width:160px" /> <br/> <br/>
+                    <div class="button" onclick="loginButtonClick()" style="margin-right:20px; margin-left:10px;">Login</div>
                     <a href="./schoolRegistration.html" class="button" style="width: 160px">Register School</a> <br/> <br/>
-                    <a href="./password.html" class="button" style="width: 180px"> Forgot password? </a>
+                    <a href="./password.html" class="button" style="width: 180px; margin-left: 60px;"> Forgot password? </a>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div id="schoolnum" style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold; margin-bottom:0px"> Number of Registered Schools:   </div>
+                    <div id="studnum" style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold"> Number of Registered Students:   </div> <br/>
+                    <br/>
+                    <br/>
+                    <img src="homeBanner.jpg" width=90% />
+            
                 </div>
+
             </div>
 
             <!-- Floating logo stick to the bottom right of the screen -->

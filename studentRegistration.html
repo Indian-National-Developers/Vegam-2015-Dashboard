@@ -6,7 +6,7 @@
         <title>Student Registration | Vegam 2k15</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
         <link type="text/css" rel="stylesheet" href="vegam.css"/>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.2.min.js"></script>
         <script type="text/javascript" src="./angular.min.js"></script>
         <script>
@@ -78,6 +78,7 @@
             $( document ).ready(function() {
                 var edge = ($(window).width() - ($('#studTable').offset().left + $('#studTabe').outerWidth()));
                 $('#saveButton').css({left: edge});
+                $('#logoutButton').css({left: edge});
                 loadSchool();
 
             });
@@ -95,6 +96,7 @@
 
         <!-- Main cotent section that contains all the page controls -->
         <div class="content" style="text-align: center">
+			<p><b> MR:</b> Mentally Retarded <b> | VI:</b> Visually Impaired<b> | HI:</b> Hearing Impaired<b> | MD:</b> Multi Disordered </p>
             <table id="studTable" width="900px" align="center" border="1" ng-app="rowRepeaterApp" ng-controller="repeaterController">
                 <tr>
                     <th width="4%"> No </th>
@@ -154,6 +156,7 @@
         <!-- Floating logo stick to the bottom right of the screen -->
         <img class="logo" src="k.png"/>
 
+        <div class="button" style="position:fixed; bottom:70px; " id='logoutButton' onclick="logout()"> Logout </div>
         <div class="button" style="position:fixed; bottom:30px; " id='saveButton' onclick="index=1; updateTable()"> Save </div>
 
         <!-- Footer that sticks to the bottom of the screen (not document) -->
@@ -164,15 +167,47 @@
 
     <script>
 
+        function logout() {
+            Parse.User.logOut();
+            window.location         =   "index.html";
+        }
+
         var index                   =   1;
         function updateTable() {
-            console.log(index);
-            if($('#userNameField' + index).val().length != 0) {
+            var studName            =   $("#userNameField" + index).val();
+            var rollNo              =   $("#rollNumberField" + index).val();
+            var studAge             =   $("#ageField" + index).val();
+            if(studName.length == 0 && rollNo.length == 0) {
+                setTimeout(function() {
+                    $("#rowOverlay").fadeOut();
+                }, 6000);
+            } else {
 
                 var studClass       =   Parse.Object.extend("Student");
                 var query           =   new Parse.Query(studClass);
                 var rowIndex        =   index;
-                var rollNo          =   $("#rollNumberField" + index).val();
+
+                if (studName == "") {
+                    alert('Student name should not be empty for the row ' + index);
+                    index++;
+                    setTimeout(updateTable(), 1000);
+                    return;
+                }   
+
+                if (studAge.length == 0) {
+                    alert('Student age should not be empty for the student' + $('#userNameField' + index).val());
+                    index++;
+                    setTimeout(updateTable(), 1000);
+                    return;
+                }   
+
+                if (rollNo.length == 0) {
+                    alert('Student Roll Number should not be empty for the student' + $('#userNameField' + index).val());
+                    index++;
+                    setTimeout(updateTable(), 1000);
+                    return;
+                }   
+
                 query.equalTo("school", schoolObject);
                 query.equalTo("ROLLNUMBER", rollNo);
                 query.first({
@@ -190,11 +225,6 @@
                 });
                 index++;
                 setTimeout(updateTable(), 1000);
-            } else {
-                console.log('hide overlay');
-                setTimeout(function() {
-                    $("#rowOverlay").fadeOut();
-                }, 6000);
             }
 
         }
@@ -202,13 +232,13 @@
         function ageChange(domObj) {
             var idStr               =   domObj.getAttribute('id');
             var index               =   idStr.slice(8);
-            getEvents(index);
+		    getEvents(index);
         }
 
         function sexSelect(domObj) {
             var idStr               =   domObj.getAttribute('id');
             var index               =   idStr.slice(8);
-            getEvents(index);
+			getEvents(index);
         }
 
         function categorySelect(domObj) {
@@ -323,11 +353,19 @@
             var categoryValue       =   $('#categoryCombo' + index).val();
             var eventCell           =   $("#eventRow" + index );
             var checkedBoxes        =   eventCell.find(":checked")
+
             var studName            =   $('#userNameField' + index).val();
+            var studRoll            =   $('#rollNumberField' + index).val();
+
             if (checkedBoxes.length > 2 || checkedBoxes.length == 0) {
                 alert('Select a minimum of 2 events for the student ' + studName);
                 return;
             }
+
+            if (studName.length == 0) {
+                alert('Student name should not be empty for the row number' + index);
+                return;
+            }   
 
             $divOverlay             =   $("#rowOverlay");
             $rowOverlay             =   $("#stuRow" + index);
@@ -345,13 +383,14 @@
             $divOverlay.show();
 
             studentReg.set("no", index);;
-            studentReg.set("USERNAME", studName);;
-            studentReg.set("ROLLNUMBER",document.getElementById("rollNumberField" + index).value);
+            studentReg.set("USERNAME", studName);
+            studentReg.set("ROLLNUMBER",studRoll);
             studentReg.set("GENDER",document.getElementById("sexCombo" + index).value);
             studentReg.set("AGE",document.getElementById("ageField" + index).value);
             studentReg.set("CATEGORY", categoryValue);
             studentReg.set("event1", null);
             studentReg.set("event2", null);
+            studentReg.set('school', schoolObject);
             if(categoryValue == "MR") {
                 studentReg.set("LEVEL",document.getElementById("MRLevel" + index).value);
             } else if (categoryValue == "VI") {
@@ -370,7 +409,6 @@
                             studentReg.set('event2', obj);
                         }
                         if (i == checkLength - 1) {
-                            studentReg.set('school', schoolObject);
                             studentReg.save(null, {
                                 success: function(studentObj) {
                                 },
@@ -384,5 +422,24 @@
                 });
             });
        };
-
+		
+		function name(){
+			var a = document.getElementById('userNameField').value;
+			if(a=="")
+			{
+				alert("Please Enter Your Name");
+				document.getElementById('userNameField').focus();
+				return false;
+			}
+			if(!isNaN(a))
+			{
+				alert("Please Enter Only Characters");
+				return false;
+			}
+			if ((a.length < 5) || (a.length > 15))
+			{
+				alert("Your Character must be 5 to 15 Character");
+				return false;
+			}
+	};
     </script>

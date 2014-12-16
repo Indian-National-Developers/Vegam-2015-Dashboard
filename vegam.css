@@ -21,6 +21,7 @@ a {
 }
 
 h1, h2, h3 {
+	text-decoration		:	none;
     margin-top          :   0px;
     margin-bottom       :   0px;
 }
@@ -32,15 +33,14 @@ h1, h2, h3 {
 
 .header {
     text-align          :   center;
-    color               :   green;
-    font-family         :   GALLERY; 
+    font-family         :   Times New Roman; 
 	font-size           :   1.5em;
 }
 .content {
     margin              :   auto;
     width               :   100%;
     margin-top          :   20px;
-    margin-bottom       :   40px;
+    margin-bottom       :   80px;
     display             :   block;
     position            :   relative;
     min-height          :   300px;
@@ -72,13 +72,13 @@ h1, h2, h3 {
 }
 
 .smallLabel {
-    width               :   100px;
+    width               :   140px;
     margin-right        :   10px;
     display             :   inline-block;
     color               :   #00248F;
     margin              :   auto;
     font-size           :   16px;
-    font-family         :   ALGERIAN;
+    font-family         :   Arial;
 }
 
 /**

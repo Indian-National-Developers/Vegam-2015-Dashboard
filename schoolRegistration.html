@@ -6,6 +6,7 @@
         <title> School Registration | Vegam 2k15</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
         <link type="text/css" rel="stylesheet" href="vegam.css"/>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
         <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.2.min.js"></script>
 
     </head>
@@ -20,13 +21,13 @@
 
         <!-- Main cotent section that contains all the page controls -->
         <div class="content">
-            <div class="halfColumn" style="margin-left:33%;">
+            <div class="halfColumn" style="margin-left:30%; width: 60%">
                 <div class="smallLabel"> School Name    </div> <input style="width: 34%;" type="text"       id="schoolname" /> <br/> <br/>
                 <div class="smallLabel"> Branch Name    </div> <input style="width: 34%;" type="text"       id="branchname" /> <br/> <br/>
-                <div class="smallLabel"> Password       </div> <input style="width: 34%;" type="password"   id='password' /> <br/> <br/>
-                <div class="smallLabel"> Confirm Pass   </div> <input style="width: 34%;" type="password"   id='conpass' /> <br/> <br/>
+				<div class="smallLabel"> Contact No    </div> <input style="width: 34%;" type="text"       id='contact' /> <br/> <br/>
                 <div class="smallLabel"> Email          </div> <input style="width: 34%;" type="text"       id='email' /> <br/> <br/>
-                <div class="smallLabel"> Contact No.    </div> <input style="width: 34%;" type="text"       id='contact' /> <br/> <br/>
+				<div class="smallLabel"> Password       </div> <input style="width: 34%;" type="password"   id='password' /> <br/> <br/>
+                <div class="smallLabel"> Confirm Pass   </div> <input style="width: 34%;" type="password"   id='conpass' /> <br/> <br/>                             
                 <div class="smallLabel"> Address        </div> <textarea id="address" rows=3 style="width: 34%;"> </textarea> <br/> <br/>
                 <div class="button" onclick="checkButtonClick()" style="margin-left:20%"> Register </div>
             </div>
@@ -42,6 +43,10 @@
 </html>
 
 <script type="text/javascript">
+
+    $( document ).ready(function() {
+
+    });
 
 //Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
 Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
@@ -68,7 +73,9 @@ function registerButtonClick(){
 	schoolReg.set("contact", contactValue);;
 	schoolReg.signUp(null, {
         success: function(schoolReg) {
+            alert('School successfully registered');
             window.location=    "index.html";
+			alert("Your School has been successfully registered!");
         },
         error: function(schoolReg, error) {
             console.log(error);
@@ -100,7 +107,7 @@ function checkButtonClick(){
     else if (contact== "") 
         alert("You didn't enter a phone number.");
     else if (isNaN(contact)) 
-        alert("The phone number contains illegal characters.");
+        alert("The phone number contains invalid characters.");
     else if (!(contact.length == 10)) 
         alert("The phone number is the wrong length. \nPlease enter 10 digit mobile no.");
     else if(address.length<6)
