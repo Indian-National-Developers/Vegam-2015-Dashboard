@@ -6,7 +6,83 @@
         <title>Student Registration | Vegam 2k15</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
         <link type="text/css" rel="stylesheet" href="vegam.css"/>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.2.min.js"></script>
+        <script type="text/javascript" src="./angular.min.js"></script>
+        <script>
+
+            var myApp = angular.module('rowRepeaterApp', []);
+            myApp.controller('repeaterController', ['$scope', function ($scope) {
+            }]);
+
+            //Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
+            Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+
+            studentList             =   null;
+            schoolObject            =   null;
+            isPopulating            =   true;
+            function loadSchool() {
+                var schoolClass     =   Parse.Object.extend("User");
+                var squery          =   new Parse.Query(schoolClass);
+                squery.get(sessionStorage.school, {
+                    success:function(sobj) {
+                        var stuClass=   Parse.Object.extend("Student");
+                        var stQuery =   new Parse.Query(stuClass);
+                        schoolObject=   sobj;
+                        stQuery.equalTo("school", sobj);
+                        stQuery.ascending("no");
+                        stQuery.find({
+                            success:function(students) {
+                                studentList =   students;
+                                lindex = 1;
+                                if (students.length)
+                                    populateFields();
+                            }, error:function(stobj, sterr) {
+                                console.log('Error fetching student' + sterr.message);
+                            }
+                        });
+                    }, error:function(sobj, serr) {
+                        console.log('Error fetching school' + serr.message);
+                    }
+                });
+            }
+
+            var lindex = 1;
+            function populateFields() {
+                var students = studentList;
+                var i = lindex-1;
+                var index       =   i+1;
+                var categ       =   students[i].get('CATEGORY');
+                $('#userNameField' + index).val(students[i].get('USERNAME'));
+                $('#rollNumberField' + index).val(students[i].get('ROLLNUMBER'));
+                $('#ageField' + index).val(students[i].get('AGE'));
+                $('#sexCombo' + index).val(students[i].get('GENDER'));
+                $('#categoryCombo' + index).val(categ);
+                $('#MRLevel' + index).hide();
+                if (categ == 'MR') {
+                    $('#MRLevel' + index).val(students[i].get('LEVEL'));
+                    $('#MRLevel' + index).show();
+                } else if (categ == 'VI') {
+                    $('#VILevel' + index).val(students[i].get('LEVEL'));
+                    $('#VILevel' + index).show();
+                }
+                isPopulating    =   true;
+                getEvents(index);
+                lindex++;
+
+                if (lindex <= students.length ) {
+                    setTimeout(populateFields(), 1000);
+                }
+            }
+
+            $( document ).ready(function() {
+                var edge = ($(window).width() - ($('#studTable').offset().left + $('#studTabe').outerWidth()));
+                $('#saveButton').css({left: edge});
+                loadSchool();
+
+            });
+
+        </script>
     </head>
 
     <body>
@@ -18,35 +94,33 @@
         </div>
 
         <!-- Main cotent section that contains all the page controls -->
-        <div class="content">
-            <table width="1000px" border="1">
+        <div class="content" style="text-align: center">
+            <table id="studTable" width="900px" align="center" border="1" ng-app="rowRepeaterApp" ng-controller="repeaterController">
                 <tr>
                     <th width="4%"> No </th>
-                    <th width="14%"> Name </th>
-                    <th width="14%"> Roll Number </th>
-                    <th width="6%"> Age </th>
-                    <th width="6%"> Sex </th>
+                    <th width="10%"> Name </th>
+                    <th width="6%"> Roll Number </th>
+                    <th width="4%"> Age </th>
+                    <th width="4%"> Sex </th>
                     <th width="5%"> Disability </th>
                     <th width="5%"> D.Level</th>
                     <th width="30%"> Events </th>
-                    <th width="10%"> Actions </th>
                 </tr>
 
-                <!-- Row 1 -->
-                <tr>
-                    <td> 1 </td>
-                    <td> <input type="text" id="userNameField1" /> </td>
-                    <td> <input type="text" id="rollNumberField1" /> </td>
-                    <td> <input type="text" id="ageField1" size="3"/> </td>
+                <tr ng-repeat="n in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]" id="{{'stuRow' + n}}" >
+                    <td> {{ n }} </td>
+                    <td> <input type="text" id="{{'userNameField' + n}}" size="18"/> </td>
+                    <td> <input type="text" id="{{'rollNumberField' + n}}" size="10"/> </td>
+                    <td> <input type="text" id="{{'ageField' + n}}" size="1" value="12" onChange="ageChange(this)"> </td>
                     <td>
-                        <select id="sexCombo1">
-                            <option value="M"> male   </option>
-                            <option value="F"> female </option>
+                        <select id="{{'sexCombo' + n}}" onChange="sexSelect(this)">
+                            <option value="M"> M</option>
+                            <option value="F"> F</option>
                         </select>
                     </td>
 
                     <td>
-                        <select id="categoryCombo1" onchange="level('1')">
+                        <select id="{{'categoryCombo' + n}}" onChange="categorySelect(this)">
                             <option value="MR"> MR </option>
                             <option value="MD"> MD </option>
                             <option value="HI"> HI </option>
@@ -55,336 +129,32 @@
                     </td>
 
                     <td>
-                        <select id="MRLevel1">
+                        <select id="{{'MRLevel' + n}}" onChange="subCategorySelect(this)">
                             <option value="1"> MILD </option>
                             <option value="2"> MODERATE </option>
                             <option value="3"> SEVERE </option>
                         </select>
-                        <select id="VILevel1" style="display:none">
+                        <select id="{{'VILevel' + n}}" style="display:none" onChange="subCategorySelect(this)">
                             <option value="1"> Partially Blind </option>
                             <option value="2"> Totally Blind </option>
                         </select>
                     </td>
 
-                    <td id="eventRow1">
+                    <td id="{{'eventRow' + n}}" style="padding:2px;text-align:left">
 
-                    </td>
-
-                    <td>
-                        <div class="button" id="updateButton1" onclick="updateButtonClick('1')"> Update </div>
                     </td>
                 </tr>
-
-                <!-- Row 2 -->
-                <tr>
-                    <td> 2 </td>
-                    <td> <input type="text" id="userNameField2" /> </td>
-                    <td> <input type="text" id="rollNumberField2" /> </td>
-                    <td> <input type="text" id="ageField2" size="3"/> </td>
-                    <td>
-                        <select id="sexCombo2">
-                            <option value="M"> male   </option>
-                            <option value="F"> female </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="categoryCombo2" onchange="level('2')">
-                            <option value="MR"> MR </option>
-                            <option value="MD"> MD </option>
-                            <option value="HI"> HI </option>
-                            <option value="VI"> VI </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="MRLevel2">
-                            <option value="1"> MILD </option>
-                            <option value="2"> MODERATE </option>
-                            <option value="3"> SEVERE </option>
-                        </select>
-                        <select id="VILevel2" style="display:none">
-                            <option value="1"> Partially Blind </option>
-                            <option value="2"> Totally Blind </option>
-                        </select>
-                    </td>
-
-                    <td id="eventRow2">
-
-                    </td>
-
-                    <td>
-                        <div class="button" id="updateButton2" onclick="updateButtonClick('2')"> Update </div>
-                    </td>
-                </tr>
-
-                <!-- Row 3 -->
-                <tr>
-                    <td> 3 </td>
-                    <td> <input type="text" id="userNameField3" /> </td>
-                    <td> <input type="text" id="rollNumberField3" /> </td>
-                    <td> <input type="text" id="ageField3" size="3"/> </td>
-                    <td>
-                        <select id="sexCombo3">
-                            <option value="M"> male   </option>
-                            <option value="F"> female </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="categoryCombo3" onchange="level('3')">
-                            <option value="MR"> MR </option>
-                            <option value="MD"> MD </option>
-                            <option value="HI"> HI </option>
-                            <option value="VI"> VI </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="MRLevel3">
-                            <option value="1"> MILD </option>
-                            <option value="2"> MODERATE </option>
-                            <option value="3"> SEVERE </option>
-                        </select>
-                        <select id="VILevel3" style="display:none">
-                            <option value="1"> Partially Blind </option>
-                            <option value="2"> Totally Blind </option>
-                        </select>
-                    </td>
-
-                    <td id="eventRow3">
-
-                    </td>
-
-                    <td>
-                        <div class="button" id="updateButton3" onclick="updateButtonClick('3')"> Update </div>
-                    </td>
-                </tr>
-
-                <!-- Row 4 -->
-                <tr>
-                    <td> 4 </td>
-                    <td> <input type="text" id="userNameField4" /> </td>
-                    <td> <input type="text" id="rollNumberField4" /> </td>
-                    <td> <input type="text" id="ageField4" size="3"/> </td>
-                    <td>
-                        <select id="sexCombo4">
-                            <option value="M"> male   </option>
-                            <option value="F"> female </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="categoryCombo4" onchange="level('4')">
-                            <option value="MR"> MR </option>
-                            <option value="MD"> MD </option>
-                            <option value="HI"> HI </option>
-                            <option value="VI"> VI </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="MRLevel4">
-                            <option value="1"> MILD </option>
-                            <option value="2"> MODERATE </option>
-                            <option value="3"> SEVERE </option>
-                        </select>
-                        <select id="VILevel4" style="display:none">
-                            <option value="1"> Partially Blind </option>
-                            <option value="2"> Totally Blind </option>
-                        </select>
-                    </td>
-
-                    <td id="eventRow4">
-
-                    </td>
-
-                    <td>
-                        <div class="button" id="updateButton4" onclick="updateButtonClick('4')"> Update </div>
-                    </td>
-                </tr>
-
-                <!-- Row 5 -->
-                <tr>
-                    <td> 5 </td>
-                    <td> <input type="text" id="userNameField5" /> </td>
-                    <td> <input type="text" id="rollNumberField5" /> </td>
-                    <td> <input type="text" id="ageField5" size="3"/> </td>
-                    <td>
-                        <select id="sexCombo5">
-                            <option value="M"> male   </option>
-                            <option value="F"> female </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="categoryCombo5" onchange="level('5')">
-                            <option value="MR"> MR </option>
-                            <option value="MD"> MD </option>
-                            <option value="HI"> HI </option>
-                            <option value="VI"> VI </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="MRLevel5">
-                            <option value="1"> MILD </option>
-                            <option value="2"> MODERATE </option>
-                            <option value="3"> SEVERE </option>
-                        </select>
-                        <select id="VILevel5" style="display:none">
-                            <option value="1"> Partially Blind </option>
-                            <option value="2"> Totally Blind </option>
-                        </select>
-                    </td>
-
-                    <td id="eventRow5">
-
-                    </td>
-
-                    <td>
-                        <div class="button" id="updateButton5" onclick="updateButtonClick('5')"> Update </div>
-                    </td>
-                </tr>
-
-                <!-- Row 6 -->
-                <tr>
-                    <td> 6 </td>
-                    <td> <input type="text" id="userNameField6" /> </td>
-                    <td> <input type="text" id="rollNumberField6" /> </td>
-                    <td> <input type="text" id="ageField6" size="3"/> </td>
-                    <td>
-                        <select id="sexCombo6">
-                            <option value="M"> male   </option>
-                            <option value="F"> female </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="categoryCombo6" onchange="level('4')">
-                            <option value="MR"> MR </option>
-                            <option value="MD"> MD </option>
-                            <option value="HI"> HI </option>
-                            <option value="VI"> VI </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="MRLevel6">
-                            <option value="1"> MILD </option>
-                            <option value="2"> MODERATE </option>
-                            <option value="3"> SEVERE </option>
-                        </select>
-                        <select id="VILevel6" style="display:none">
-                            <option value="1"> Partially Blind </option>
-                            <option value="2"> Totally Blind </option>
-                        </select>
-                    </td>
-
-                    <td id="eventRow6">
-
-                    </td>
-
-                    <td>
-                        <div class="button" id="updateButton6" onclick="updateButtonClick('6')"> Update </div>
-                    </td>
-                </tr>
-
-                <!-- Row 7 -->
-                <tr>
-                    <td> 7 </td>
-                    <td> <input type="text" id="userNameField7" /> </td>
-                    <td> <input type="text" id="rollNumberField7" /> </td>
-                    <td> <input type="text" id="ageField7" size="3"/> </td>
-                    <td>
-                        <select id="sexCombo7">
-                            <option value="M"> male   </option>
-                            <option value="F"> female </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="categoryCombo7" onchange="level('7')">
-                            <option value="MR"> MR </option>
-                            <option value="MD"> MD </option>
-                            <option value="HI"> HI </option>
-                            <option value="VI"> VI </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="MRLevel7">
-                            <option value="1"> MILD </option>
-                            <option value="2"> MODERATE </option>
-                            <option value="3"> SEVERE </option>
-                        </select>
-                        <select id="VILevel7" style="display:none">
-                            <option value="1"> Partially Blind </option>
-                            <option value="2"> Totally Blind </option>
-                        </select>
-                    </td>
-
-                    <td id="eventRow7">
-
-                    </td>
-
-                    <td>
-                        <div class="button" id="updateButton7" onclick="updateButtonClick('7')"> Update </div>
-                    </td>
-                </tr>
-
-                <!-- Row 8 -->
-                <tr>
-                    <td> 8 </td>
-                    <td> <input type="text" id="userNameField8" /> </td>
-                    <td> <input type="text" id="rollNumberField8" /> </td>
-                    <td> <input type="text" id="ageField8" size="3"/> </td>
-                    <td>
-                        <select id="sexCombo8">
-                            <option value="M"> male   </option>
-                            <option value="F"> female </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="categoryCombo8" onchange="level('8')">
-                            <option value="MR"> MR </option>
-                            <option value="MD"> MD </option>
-                            <option value="HI"> HI </option>
-                            <option value="VI"> VI </option>
-                        </select>
-                    </td>
-
-                    <td>
-                        <select id="MRLevel8">
-                            <option value="1"> MILD </option>
-                            <option value="2"> MODERATE </option>
-                            <option value="3"> SEVERE </option>
-                        </select>
-                        <select id="VILevel8" style="display:none">
-                            <option value="1"> Partially Blind </option>
-                            <option value="2"> Totally Blind </option>
-                        </select>
-                    </td>
-
-                    <td id="eventRow8">
-
-                    </td>
-
-                    <td>
-                        <div class="button" id="updateButton8" onclick="updateButtonClick('8')"> Update </div>
-                    </td>
-                </tr>
-
-
-
-
 
             </table>
+            <br/>
+            <br/>
+            <div id="rowOverlay" style="display:none; background-color:rgba(200, 100, 100, 0.5); position:absolute; text-align:center; vertical-align:middle; font-size: 24px;"> ...processing... </div>
         </div>
 
         <!-- Floating logo stick to the bottom right of the screen -->
         <img class="logo" src="k.png"/>
+
+        <div class="button" style="position:fixed; bottom:30px; " id='saveButton' onclick="index=1; updateTable()"> Save </div>
 
         <!-- Footer that sticks to the bottom of the screen (not document) -->
         <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a> </p>
@@ -393,11 +163,57 @@
     </html>
 
     <script>
-            
-        Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
-        //Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
 
-        function level(index) {
+        var index                   =   1;
+        function updateTable() {
+            console.log(index);
+            if($('#userNameField' + index).val().length != 0) {
+
+                var studClass       =   Parse.Object.extend("Student");
+                var query           =   new Parse.Query(studClass);
+                var rowIndex        =   index;
+                var rollNo          =   $("#rollNumberField" + index).val();
+                query.equalTo("school", schoolObject);
+                query.equalTo("ROLLNUMBER", rollNo);
+                query.first({
+                    success:function(studObj) {
+                        if (studObj) {
+                            saveButtonClick(studObj, rowIndex);
+                        } else {
+                            var StudentReg  =   Parse.Object.extend("Student");
+                            var studentReg  =   new StudentReg();
+                            saveButtonClick(studentReg, rowIndex);
+                        }
+                    },
+                    error: function(studerror) {
+                    }
+                });
+                index++;
+                setTimeout(updateTable(), 1000);
+            } else {
+                console.log('hide overlay');
+                setTimeout(function() {
+                    $("#rowOverlay").fadeOut();
+                }, 6000);
+            }
+
+        }
+
+        function ageChange(domObj) {
+            var idStr               =   domObj.getAttribute('id');
+            var index               =   idStr.slice(8);
+            getEvents(index);
+        }
+
+        function sexSelect(domObj) {
+            var idStr               =   domObj.getAttribute('id');
+            var index               =   idStr.slice(8);
+            getEvents(index);
+        }
+
+        function categorySelect(domObj) {
+            var idStr               =   domObj.getAttribute('id');
+            var index               =   idStr.slice(13);
             if(document.getElementById('categoryCombo' + index ).value == "MR") {
                 document.getElementById("MRLevel" + index).style.display = 'block';
                 document.getElementById("VILevel" + index).style.display = 'none';
@@ -408,53 +224,165 @@
                 document.getElementById("VILevel" + index).style.display = 'none';
                 document.getElementById("MRLevel" + index).style.display = 'none';
             }
+
+            getEvents(index);
         };
 
-        function parse(){	
-            var name = document.getElementById("username");
-            var roll = document.getElementById("roll");
-            var gender = document.getElementById("drop1");
-            var age = document.getElementById("drop2");
-            var category = document.getElementById("rad");
-            var level = document.getElementById("drop4");
-            var nameValue = name.value;
-            var rollValue = roll.value;
-            var genderValue = gender.value;
-            var ageValue = age.value;
-            var categoryValue = category.value;
-            var levelValue = level.value;
-            
-            var StudentReg = Parse.Object.extend("StudentReg");
-            var studentReg = new StudentReg();
-            
-            /*schoolReg.set("USERNAME","THINA");
-            schoolReg.set("PASSWORD","ASDF");
-            schoolReg.set("SCHOOL","THINA");
-            schoolReg.set("ADDRESS","THINA");
-            schoolReg.set("CONTACT","THINA"); */
-            
-            console.log(document.getElementById("roll").value);
-            studentReg.set("USERNAME",document.getElementById("username").value);
-            studentReg.set("ROLL NUMBER",document.getElementById("roll").value);
-            studentReg.set("GENDER",document.getElementById("drop1").value);
-            studentReg.set("AGE",document.getElementById("drop2").value);
-            studentReg.set("CATEGORY",document.getElementById("rad").value);
-            studentReg.set("LEVEL",document.getElementById("drop4").value);
-            /*
-            studentReg.save(null, {
-                    success: function(studentReg) {
-                            // Execute any logic that should take place after the object is saved.
-                            console.log("SUCCESS");
-                            alert('New object created with objectId: ' + studentReg.id);
-                    },
-                    error: function(studentReg, error) {
-                            // Execute any logic that should take place if the save fails.
-                            // error is a Parse.Error with an error code and message.
-                            console.log("ERROR");
-                            alert('Failed to create new object, with error code: ' + error.message);
+        function subCategorySelect(domObj) {
+            var idStr               =   domObj.getAttribute('id');
+            var index               =   idStr.slice(7);
+            getEvents(index);
+        }
+
+        function getEvents(rowIndex) {
+            var container           =   document.getElementById('eventRow'+rowIndex);
+
+            $divOverlay             =   $("#rowOverlay");
+            $rowOverlay             =   $("#stuRow" + rowIndex);
+            var rowTop              =   $rowOverlay.position().top;
+            var rowLeft             =   $rowOverlay.position().left;
+            var rowWidth            =   $rowOverlay.css('width');
+            var rowHeight           =   $rowOverlay.css('height');
+            $divOverlay.css({
+                position            :   'absolute',
+                top                 :   rowTop,
+                left                :   rowLeft,
+                width               :   rowWidth,
+                height              :   rowHeight
+            });
+            $divOverlay.show();
+
+            var eventsClass         =   Parse.Object.extend("EVENTS");
+            var query               =   new Parse.Query(eventsClass);
+
+            var sexValue            =   $('#sexCombo' + rowIndex).val();
+            var ageValue            =   parseInt($('#ageField' + rowIndex).val());
+            var categoryValue       =   $('#categoryCombo' + rowIndex).val();
+
+            query.equalTo("GENDER", sexValue);
+            query.lessThanOrEqualTo("AGE_MIN", ageValue);
+            query.greaterThanOrEqualTo("AGE_MAX", ageValue);;
+            query.equalTo("D_Category", categoryValue); 
+
+            if(categoryValue == "MR") {
+                var levelValue      =   parseInt($('#MRLevel' + rowIndex).val());
+                query.equalTo("D_Level_1_2_3", levelValue);
+            } else if (categoryValue == "VI") {
+                var levelValue      =   parseInt($('#VILevel' + rowIndex).val());
+                query.equalTo("D_Level_1_2_3", levelValue);
+            }
+
+            query.find({
+                success:function(results) {
+                    //empty the event cell for the given row
+                    while (container.hasChildNodes()) {
+                        container.removeChild(container.lastChild);
                     }
-                    });
-                    */
+
+                    populateEventCellWithEvents(results, rowIndex);
+                    $divOverlay.fadeOut();
+                }, 
+                error: function(error) {
+                    console.log('Failure retrieveing events' + error.message );
+                }
+            });
+
+        }
+
+        function populateEventCellWithEvents(events, rowIndex) {
+            var container           =   document.getElementById('eventRow'+rowIndex);
+            events.forEach(function(event) {
+                //console.log(event.id);
+                var checkbox        =   document.createElement('input');
+                checkbox.type       =   "checkbox";
+                checkbox.id         =   event.id;
+
+                var label           =   document.createElement('label')
+                label.htmlFor       =   event.id;
+                label.appendChild(document.createTextNode(event.get('EVENT_NAME')));
+
+                container.appendChild(checkbox);
+                container.appendChild(label);
+                container.appendChild(document.createElement('br'));
+
+                if(isPopulating && studentList[rowIndex-1]) {
+                    var event1Obj = studentList[rowIndex-1].get('event1');
+                    if (event1Obj && event1Obj.id == event.id) {
+                        checkbox.checked = true;
+                    }
+                    var event2Obj = studentList[rowIndex-1].get('event2');
+                    if (event2Obj && event2Obj.id == event.id) {
+                        checkbox.checked = true;
+                    }
+                }
+            });
+
         };
+
+        function saveButtonClick(studentReg, index){	
+            var categoryValue       =   $('#categoryCombo' + index).val();
+            var eventCell           =   $("#eventRow" + index );
+            var checkedBoxes        =   eventCell.find(":checked")
+            var studName            =   $('#userNameField' + index).val();
+            if (checkedBoxes.length > 2 || checkedBoxes.length == 0) {
+                alert('Select a minimum of 2 events for the student ' + studName);
+                return;
+            }
+
+            $divOverlay             =   $("#rowOverlay");
+            $rowOverlay             =   $("#stuRow" + index);
+            var rowTop              =   $rowOverlay.position().top;
+            var rowLeft             =   $rowOverlay.position().left;
+            var rowWidth            =   $rowOverlay.css('width');
+            var rowHeight           =   $rowOverlay.css('height');
+            $divOverlay.css({
+                position            :   'absolute',
+                top                 :   rowTop,
+                left                :   rowLeft,
+                width               :   rowWidth,
+                height              :   rowHeight
+            });
+            $divOverlay.show();
+
+            studentReg.set("no", index);;
+            studentReg.set("USERNAME", studName);;
+            studentReg.set("ROLLNUMBER",document.getElementById("rollNumberField" + index).value);
+            studentReg.set("GENDER",document.getElementById("sexCombo" + index).value);
+            studentReg.set("AGE",document.getElementById("ageField" + index).value);
+            studentReg.set("CATEGORY", categoryValue);
+            studentReg.set("event1", null);
+            studentReg.set("event2", null);
+            if(categoryValue == "MR") {
+                studentReg.set("LEVEL",document.getElementById("MRLevel" + index).value);
+            } else if (categoryValue == "VI") {
+                studentReg.set("LEVEL",document.getElementById("VILevel" + index).value);
+            }
+
+            var checkLength         =   checkedBoxes.length;
+            checkedBoxes.each(function(i) {
+                var eventsClass     =   Parse.Object.extend("EVENTS");
+                var query           =   new Parse.Query(eventsClass);
+                query.get(this.getAttribute('id'), {
+                    success:function(obj) {
+                        if (i == 0) {
+                            studentReg.set('event1', obj);
+                        } else if (i == 1) {
+                            studentReg.set('event2', obj);
+                        }
+                        if (i == checkLength - 1) {
+                            studentReg.set('school', schoolObject);
+                            studentReg.save(null, {
+                                success: function(studentObj) {
+                                },
+                                error: function(studentObj, error) {
+                                    alert('Failed to create new object, with error code: ' + error.message);
+                                }
+                            });
+                        }
+                    }, error: function (obj) {
+                    }
+                });
+            });
+       };
 
     </script>

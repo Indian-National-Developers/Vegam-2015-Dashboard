@@ -11,7 +11,22 @@
         <script type="text/javascript" src="https://www.parse.com/downloads/javascript/parse-1.3.2.js"></script>
         <script type="text/javascript">
 
-            Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
+            //Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
+            Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+
+            var UserClass = Parse.Object.extend("User");
+            var query = new Parse.Query(UserClass);
+            query.find({
+                success: function(results) {
+                    userSelect  =   document.getElementById('userNameTextBox');
+                    results.forEach(function(user) {
+                        userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
+                        console.log(user.get('username'));
+                    });
+                }, error: function(error) {
+                }
+            });
+
 
             function loginButtonClick() {
                 var uName       =   document.getElementById('userNameTextBox').value;
@@ -19,8 +34,8 @@
 
                 Parse.User.logIn(uName, pass, {
                     success: function(user) {
-                        sessionStorage.school   =   JSON.stringify(user);
-                        window.location         =   "schoolDashboard.html";
+                        sessionStorage.school   =   user.id;
+                        window.location         =   "studentRegistration.html";
                     },
                     error: function(user, error) {
                         alert('Wrong username or password');
@@ -52,10 +67,12 @@
                 </div>
 
                 <div class="halfColumn" style="width: 30%; padding:4%" >
-                    <div class="smallLabel"> User Name </div> <input type="text" id="userNameTextBox" /> <br/> <br/>
+                    <div class="smallLabel"> School Name </div> <select id="userNameTextBox" style="width: 125px"/>
+                    </select> <br/> <br/>
                     <div class="smallLabel"> Password  </div> <input type="password" id='passwordTextBox' /> <br/> <br/>
                     <div class="button" onclick="loginButtonClick()">Login</div>
-                    <a href="./schoolRegistration.html" class="button">Register</a>
+                    <a href="./schoolRegistration.html" class="button" style="width: 160px">Register School</a> <br/> <br/>
+                    <a href="./password.html" class="button" style="width: 180px"> Forgot password? </a>
                 </div>
             </div>
 
