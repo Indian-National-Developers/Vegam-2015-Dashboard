@@ -22,13 +22,13 @@
         <!-- Main cotent section that contains all the page controls -->
         <div class="content">
             <div class="halfColumn" style="margin-left:30%; width: 60%">
-                <div class="smallLabel"> School Name    </div> <input style="width: 34%;" type="text"       id="schoolname" /> <br/> <br/>
-                <div class="smallLabel"> Branch Name    </div> <input style="width: 34%;" type="text"       id="branchname" /> <br/> <br/>
-				<div class="smallLabel"> Contact No    </div> <input style="width: 34%;" type="text"       id='contact' /> <br/> <br/>
-                <div class="smallLabel"> Email          </div> <input style="width: 34%;" type="text"       id='email' /> <br/> <br/>
-				<div class="smallLabel"> Password       </div> <input style="width: 34%;" type="password"   id='password' /> <br/> <br/>
-                <div class="smallLabel"> Confirm Pass   </div> <input style="width: 34%;" type="password"   id='conpass' /> <br/> <br/>                             
-                <div class="smallLabel"> Address        </div> <textarea id="address" rows=3 style="width: 34%;"> </textarea> <br/> <br/>
+                <div class="smallLabel"> School Name*    </div> <input style="width: 34%;" type="text"       id="schoolname" /> <br/> <br/>
+                <div class="smallLabel"> Branch Name*    </div> <input style="width: 34%;" type="text"       id="branchname" /> <br/> <br/>
+				<div class="smallLabel"> Contact No*    </div> <input style="width: 34%;" type="text"       id='contact' /> <br/> <br/>
+                <div class="smallLabel"> Email*         </div> <input style="width: 34%;" type="text"       id='email' /> <br/> <br/>
+				<div class="smallLabel"> Password*       </div> <input style="width: 34%;" type="password"   id='password' /> <br/> <br/>
+                <div class="smallLabel"> Confirm Password*   </div> <input style="width: 34%;" type="password"   id='conpass' /> <br/> <br/>                             
+                <div class="smallLabel"> Address*        </div> <textarea id="address" rows=3 style="width: 34%;"> </textarea> <br/> <br/>
                 <div class="button" onclick="checkButtonClick()" style="margin-left:20%"> Register </div>
             </div>
         </div>
@@ -37,7 +37,7 @@
         <img class="logo" src="k.png"/>
 
         <!-- Footer that sticks to the bottom of the screen (not document) -->
-        <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a> </p>
+        <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a> &nbsp , &nbsp use only <a href="https://www.google.com/chrome/browser/desktop/">(Chrome</a>,<a href="https://www.mozilla.org/en-US/firefox/new/">Firefox)</a>  </p>
 
 </body>
 </html>
@@ -91,6 +91,8 @@ function checkButtonClick(){
 	var pass            =   document.getElementById("password").value;
 	var con             =   document.getElementById("conpass").value;
 	var email           =   document.getElementById("email").value;
+	var atpos           =   email.indexOf("@");
+    var dotpos          =   email.lastIndexOf(".");
 	var contact         =   document.getElementById("contact").value;
 	var address         =   document.getElementById("address").value;
 	
@@ -98,18 +100,18 @@ function checkButtonClick(){
         alert("Schoolname should contain atleast 5 characters!!");
     else if(branch.length<2)
         alert("Branchname should contain atleast 2 characters!!");
-    else if(pass.length<4)
-        alert("PASSWORD should contain atleast 4 characters!!");
-    else if(con != pass)
-        alert("PASSWORD does not match!!");
-    else if(email.length<6)
-        alert("This doesn't seem to a Valid email-id");
     else if (contact== "") 
         alert("You didn't enter a phone number.");
     else if (isNaN(contact)) 
         alert("The phone number contains invalid characters.");
     else if (!(contact.length == 10)) 
         alert("The phone number is the wrong length. \nPlease enter 10 digit mobile no.");
+	else if (atpos<1 || dotpos<atpos+2 || dotpos+2>= email.length)
+        alert("This doesn't seem to a Valid email-id");
+	else if(pass.length<4)
+        alert("PASSWORD should contain atleast 4 characters!!");
+	else if(con != pass)
+        alert("PASSWORD does not match!!");
     else if(address.length<6)
         alert("This doesn't seem to a Valid Address!");
     else{

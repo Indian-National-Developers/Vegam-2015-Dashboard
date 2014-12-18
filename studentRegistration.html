@@ -81,6 +81,49 @@
                 $('#logoutButton').css({left: edge});
                 loadSchool();
 
+                $("[id^=deleteStudButton]").click(function() {
+                    var index       =   parseInt($(this).attr("id").replace('deleteStudButton',''), 10);
+                    var rollNo      =   $('#rollNumberField' + index).val();
+                    var rowIndex    =   index;
+
+                    $divOverlay             =   $("#rowOverlay");
+                    $rowOverlay             =   $("#stuRow" + rowIndex);
+                    var rowTop              =   $rowOverlay.position().top;
+                    var rowLeft             =   $rowOverlay.position().left;
+                    var rowWidth            =   $rowOverlay.css('width');
+                    var rowHeight           =   $rowOverlay.css('height');
+                    $divOverlay.css({
+                        position            :   'absolute',
+                        top                 :   rowTop,
+                        left                :   rowLeft,
+                        width               :   rowWidth,
+                        height              :   rowHeight
+                    });
+                    $divOverlay.show();
+
+                    var studClass   =   Parse.Object.extend("Student");
+                    var query       =   new Parse.Query(studClass);
+                    query.equalTo("ROLLNUMBER", rollNo);
+                    query.equalTo("school", schoolObject);
+                    query.first({
+                        success:function(studObj) {
+                            console.log(studObj);
+                            studObj.destroy({
+                                success: function(myObject) {
+                                    $divOverlay.fadeOut();
+                                    $('#userNameField' + index).val(""); 
+                                    $('#rollNumberField' + index).val(""); 
+                                    location.reload();
+                                },
+                                error: function(myObject, error) {
+                                }
+                            });
+                        },
+                        error: function(studerror) {
+                        }
+                    });
+                });
+
             });
 
         </script>
@@ -96,20 +139,21 @@
 
         <!-- Main cotent section that contains all the page controls -->
         <div class="content" style="text-align: center">
-			<p><b> MR:</b> Mentally Retarded <b> | VI:</b> Visually Impaired<b> | HI:</b> Hearing Impaired<b> | MD:</b> Multi Disordered </p>
+			<p><b> MR:</b> Mentally Retarded <b> | VI:</b> Visually Impaired<b> | HI:</b> Hearing Impaired<b> | MD:</b> Multiple Disability </p>
             <table id="studTable" width="900px" align="center" border="1" ng-app="rowRepeaterApp" ng-controller="repeaterController">
                 <tr>
                     <th width="4%"> No </th>
                     <th width="10%"> Name </th>
                     <th width="6%"> Roll Number </th>
                     <th width="4%"> Age </th>
-                    <th width="4%"> Sex </th>
+                    <th width="4%"> Gender </th>
                     <th width="5%"> Disability </th>
                     <th width="5%"> D.Level</th>
                     <th width="30%"> Events </th>
+                    <th width="2%"> Delete </th>
                 </tr>
 
-                <tr ng-repeat="n in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30]" id="{{'stuRow' + n}}" >
+                <tr ng-repeat="n in [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50]" id="{{'stuRow' + n}}" >
                     <td> {{ n }} </td>
                     <td> <input type="text" id="{{'userNameField' + n}}" size="18"/> </td>
                     <td> <input type="text" id="{{'rollNumberField' + n}}" size="10"/> </td>
@@ -145,6 +189,10 @@
                     <td id="{{'eventRow' + n}}" style="padding:2px;text-align:left">
 
                     </td>
+
+                    <td> 
+                        <div class="button" style="width:20px" id="{{'deleteStudButton' + n}}"> X </div>
+                    </td>
                 </tr>
 
             </table>
@@ -153,19 +201,43 @@
             <div id="rowOverlay" style="display:none; background-color:rgba(200, 100, 100, 0.5); position:absolute; text-align:center; vertical-align:middle; font-size: 24px;"> ...processing... </div>
         </div>
 
+        <!-- Floating logo stick to the bottom left of the screen -->
+        <img class="logo" src="css.jpg" style="right:auto; left:1%; z-index:-1" width="150" height="150"/>
+
         <!-- Floating logo stick to the bottom right of the screen -->
         <img class="logo" src="k.png"/>
 
         <div class="button" style="position:fixed; bottom:70px; " id='logoutButton' onclick="logout()"> Logout </div>
-        <div class="button" style="position:fixed; bottom:30px; " id='saveButton' onclick="index=1; updateTable()"> Save </div>
+        <div class="button" style="position:fixed; bottom:30px; " id='saveButton' onclick="checkForDuplicateAndSave()"> Save </div>
 
         <!-- Footer that sticks to the bottom of the screen (not document) -->
-        <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a> </p>
+        <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a>. Use <a href="https://www.google.com/chrome/browser/desktop/">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> to properly use this site.</p>
 
     </body>
     </html>
 
     <script>
+
+		function checkForDuplicateAndSave(){
+            var rollArray           =   [];
+            var duplicate           =   false;
+            for(var i = 1; i <= 50; i++) {
+                var currentRoll     =   $('#rollNumberField' + i).val();
+                if (currentRoll == "") continue;
+                var inde            =   rollArray.indexOf(currentRoll);
+                if (inde != -1) {
+                    duplicate       =   true;
+                    alert('Roll Number at row ' + i + ' and at row ' + (inde + 1) + ' is the same. Please give unique roll numbers');
+                    break;
+                }
+                rollArray.push(document.getElementById("rollNumberField"+i).value);
+            }
+
+            if(duplicate == false) {
+                index = 1;
+                updateTable();
+            }
+        }
 
         function logout() {
             Parse.User.logOut();
@@ -177,6 +249,7 @@
             var studName            =   $("#userNameField" + index).val();
             var rollNo              =   $("#rollNumberField" + index).val();
             var studAge             =   $("#ageField" + index).val();
+
             if(studName.length == 0 && rollNo.length == 0) {
                 setTimeout(function() {
                     $("#rowOverlay").fadeOut();
@@ -349,7 +422,7 @@
 
         };
 
-        function saveButtonClick(studentReg, index){	
+        function saveButtonClick(studentReg, index){
             var categoryValue       =   $('#categoryCombo' + index).val();
             var eventCell           =   $("#eventRow" + index );
             var checkedBoxes        =   eventCell.find(":checked")
@@ -358,7 +431,7 @@
             var studRoll            =   $('#rollNumberField' + index).val();
 
             if (checkedBoxes.length > 2 || checkedBoxes.length == 0) {
-                alert('Select a minimum of 2 events for the student ' + studName);
+                alert('Select a maximum of 2 events for the student ' + studName);
                 return;
             }
 
@@ -443,3 +516,4 @@
 			}
 	};
     </script>
+
