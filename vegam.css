@@ -20,7 +20,7 @@ a {
     color               :   green;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
 	text-decoration		:	none;
     margin-top          :   0px;
     margin-bottom       :   0px;
@@ -144,5 +144,6 @@ h1, h2, h3 {
     position            :   fixed;
     bottom              :   8%;
     right               :   1%;
+    z-index             :   -10;
 }
 
