@@ -63,8 +63,8 @@ $( document ).ready(function() {
         var index       =   parseInt($(this).attr("id").replace('ageField',''), 10);
         var enteredValue=   parseInt($(this).val());
 
-        if (enteredValue < 6 || enteredValue > 18) {
-            alert('Age should be given between 6 and 18 at row number ' + (index + 0));
+        if (enteredValue < 6 || enteredValue > 25) {
+            alert('Age should be given between 6 and 25 at row number ' + (index + 0));
             $(this).val('12');
         }
 
@@ -229,7 +229,7 @@ function populateEventCellWithEvents(events, rowIndex) {
 function checkForDuplicateAndSave() {
     var rollArray           =   [];
     var duplicate           =   false;
-    for(var i = 1; i <= 50; i++) {
+    for(var i = 1; i <= 99; i++) {
         var currentRoll     =   $('#rollNumberField' + i).val();
         if (currentRoll == "") continue;
         var inde            =   rollArray.indexOf(currentRoll);
@@ -274,7 +274,7 @@ function generate() {
     yy += 8; pdf.text(20, yy, 'The list of the students,');
 
     yy += 2;
-    for (var i = 1; i <= 50; i++) {
+    for (var i = 1; i <= 99; i++) {
 
         yy += 5;
 
@@ -313,7 +313,7 @@ function generate() {
     pdf.text(20, yy, 'Principal Signature and Seal');
     pdf.text(130, yy, 'Physical Teacher Signature');
 
-    pdf.save('Test.pdf');
+    pdf.save('StudentList.pdf');
 
 }
 
