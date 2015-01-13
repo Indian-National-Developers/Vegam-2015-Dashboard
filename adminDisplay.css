@@ -72,17 +72,6 @@ h1, h2, h3, h4, h5, h6 {
 	overflow-y			:	scroll;
 }
 
-.eventDisplay{
-	width               :   100%;
-    min-height          :  	150px;
-	border				:	2px solid black;
-	overflow-y			:	scroll;
-	display				:	block;
-	margin				: 	5px auto;
-	float				:	left;
-}
-
-
 .smallLabel {
     width               :   140px;
     margin-right        :   10px;

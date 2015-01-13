@@ -71,11 +71,18 @@ h3 {
  */
 
 .halfColumn {
-    width               :   48%;
+    width               :   46%;
     margin-left         :   1%;
     display             :   block;
     min-height          :   300px;
     float               :   left;
+}
+
+.fullColumn {
+	width               :   96%;
+	border				:	2px solid black;
+	display				:	block;
+	margin				: 	5px auto;
 }
 
 .smallLabel {
