@@ -155,6 +155,7 @@ function populateFields() {
 }
 
 function getEvents(rowIndex) {
+
     var container           =   document.getElementById('eventRow'+rowIndex);
 
     showOverlayOnRowIndex(rowIndex);
@@ -193,7 +194,6 @@ function getEvents(rowIndex) {
             console.log('Failure retrieveing events' + error.message );
         }
     });
-
 }
 
 function populateEventCellWithEvents(events, rowIndex) {
