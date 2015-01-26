@@ -1,0 +1,330 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Sunil, Priya, Thina, saiy2k">
+        <title> Individual Registration | Vegam 2k15</title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="vegam.css"/>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.2.min.js"></script>
+
+    </head>
+
+    <body>
+
+        <!-- Top section contains the Vegam Title and Page Title -->
+        <div class="header"> 
+            <h1> <a href="index.html"> Vegam 2k15 </a> </h1>
+            <h3> Individual Registration </h3>
+        </div>
+		
+		<!-- Main cotent section that contains all the page controls -->
+        <div class="content">
+            <div class="halfColumn" style="margin-left:30%; width: 60%">
+			<form>
+                <div class="smallLabel"> Student Name *    </div> <input style="width: 34%;" type="text"       id="studName" /> <br/> <br/>
+                <div class="smallLabel"> Roll No    </div> <input style="width: 34%;" type="text"       id="roll" /> <br/> <br/>
+				<div class="smallLabel"> Age *    </div> <input style="width: 34%;" type="text"       id='age' onblur="eventDisplay()" /> <br/> <br/>
+                <div class="smallLabel"> Gender *         </div>	<select id='gender' style="width: 34.5%;" onchange="eventDisplay()"> 
+																				
+																				<option value="M">MALE</option>
+																				<option value="F">FEMALE</option>
+																			</select>
+																 
+				<br/> <br/>
+				<div class="smallLabel"> Disability category*       </div> <select id='category' style="width: 34.5%;" onchange="levelDisplay()"> 
+																				
+																				<option value="VI">Visually Impaired</option>
+																				<option value="HI">Hearing Impaired</option>
+																				<option value="MR">Mentally Retarded</option>
+																				<option value="MD">Multi Disordered</option>
+																			</select>
+																			<br/> <br/>
+                <div id="MRLevel" style="display: none"><div class="smallLabel"> Disability level *   </div>  <select id='mrlevel' style="width: 34.5%;" onchange="eventDisplay()"> 
+																				
+																				<option value="1">Mild</option>
+																				<option value="2">Moderate</option>
+																				<option value="3">Severe</option>
+																	  </select></div><div id="nl"></div>
+				
+				<div id="VILevel"><div class="smallLabel"> Disability level *   </div>  <select id='vilevel' style="width: 34.5%;" onchange="eventDisplay()"> 
+																				
+																				<option value="1">Partial Blind</option>
+																				<option value="2">Fully Blind</option>
+                                                                        </select></div><div id="nl"></div> <br/>
+										
+				
+				                           
+                <div class="smallLabel"> School Name       </div> <input style="width: 34%;" type="text"       id="schoolName" /> <br/> <br/>
+                <div class="smallLabel"> Phone Number *        </div> <input style="width: 34%;" type="text"       id="phone" /> <br/> <br/>
+                <div class="smallLabel"> e-Mail ID *        </div> <input style="width: 34%;" type="text"       id="email" /> <br/> <br/>
+                <div class="halfColumn" style="color: #00248F;margin: 0 -10em 0 0;font-size: 16px;font-family: Arial;"> Select Event </div> <div id="eventRow" > </div> <br/> <br/>
+                <div class="button" onclick="checkButtonClick()" style="margin-left:20%"> Register </div> <br/> <br/> <br/> <br/>
+			</form>
+            </div>
+        </div>
+
+        <!-- Floating logo stick to the bottom right of the screen -->
+        <img class="logo" src="k.png"/>
+
+        <!-- Footer that sticks to the bottom of the screen (not document) -->
+        <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a> &nbsp , &nbsp use only <a href="https://www.google.com/chrome/browser/desktop/">(Chrome</a>,<a href="https://www.mozilla.org/en-US/firefox/new/">Firefox)</a>  </p>
+
+</body>
+</html>
+
+<script type="text/javascript">
+
+    $( document ).ready(function() {
+			
+    });
+
+//Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
+//Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+Parse.initialize("dyWMVoVnXVlh3YnPzAb7VQYEmASCrXw3oCaN5h44", "uoF0Pkgz32Tc7ypEM50YnROZ5izmgqnwBmCMvz62");
+
+function checkButtonClick(){
+
+	var name            =   document.getElementById("studName");
+	var roll          	=   document.getElementById("roll");
+	var age         	=   document.getElementById("age");
+	var gender        	=   document.getElementById("gender");
+	var category        =   document.getElementById("category");
+	var mrlevel         =   document.getElementById("mrlevel");
+	var vilevel         =   document.getElementById("vilevel");
+	var schoolName      =   document.getElementById("schoolName");
+	var contact         =   document.getElementById("phone");
+	var email           =   document.getElementById("email");
+	
+	
+    var nameValue       =   name.value;
+    var rollValue    	=   roll.value;
+	var ageValue		=	age.value;
+	var genderValue		=	gender.value;
+	var catValue		=	category.value;
+	var mrlevelValue	=	mrlevel.value;
+	var vilevelValue	=	vilevel.value;
+	var schoolNameValue	=	schoolName.value;
+	var contactValue    =   contact.value;
+	var emailValue      =   email.value;
+	
+    var atpos = emailValue.indexOf("@");
+    var dotpos = emailValue.lastIndexOf(".");
+	var inputElems = document.getElementsByTagName("input"),
+    count = 0;
+	for (var i=0; i<inputElems.length; i++) {
+    if (inputElems[i].type === "checkbox" && inputElems[i].checked === true) {
+        count++;
+    }
+	}
+	
+	/*
+			console.log(nameValue);
+			console.log(rollValue);
+			console.log(ageValue);
+			console.log(genderValue);
+			console.log(catValue);
+			
+			console.log(schoolNameValue);
+			console.log(contactValue);
+			console.log(emailValue);
+	
+	*/
+	
+	if(nameValue.length<5)
+        alert("Student Name should contain atleast 5 characters!!");
+		else if (rollValue.langth==="")
+			alert("Please enter a valid Roll Number");
+			else if(isNaN(ageValue))
+			alert("Please enter a valid Age");
+			else if(ageValue.length===0)
+				alert("Pleaseenter a valid age");
+			else if (ageValue<6)
+			alert("Age has to be more than 5");
+				else if (ageValue>25)
+				alert("Age has to be less than 26");
+					else if (contactValue== "")
+					alert("You didn't enter a phone number.");
+						else if (isNaN(contactValue)) 
+						alert("The phone number contains invalid characters.");
+							else if (!(contactValue.length == 10)) 
+							alert("The phone number is the wrong length. \nPlease enter 10 digit mobile no.");
+								else if (atpos< 1 || dotpos<atpos+2 || dotpos+2>=emailValue.length)
+								alert("This doesn't seem to a Valid email-id");
+									else if(count>2)
+									alert("Only 2 events can be selected!");
+										else if(count===0)
+										alert("Atleast 1 event has to be selected!");
+											else{
+												//registerButtonClick();
+												saveButtonClick();
+												console.log("DONE");
+											
+}
+
+};
+
+function saveButtonClick(){
+	var INDIVIDUAL = Parse.Object.extend("INDIVIDUAL");
+	var details = new INDIVIDUAL();
+    var categoryValue       =   document.getElementById("category");
+    var eventCell           =   $("#eventRow");
+    var checkedBoxes        =   eventCell.find(":checked")
+	 
+	var name            =   document.getElementById("studName");
+	var roll          	=   document.getElementById("roll");
+	var age         	=   document.getElementById("age");
+	var gender        	=   document.getElementById("gender");
+	var category        =   document.getElementById("category");
+	var mrlevel         =   document.getElementById("mrlevel");
+	var vilevel         =   document.getElementById("vilevel");
+	var schoolName      =   document.getElementById("schoolName");
+	var contact         =   document.getElementById("phone");
+	var email           =   document.getElementById("email");
+    var nameValue       =   name.value;
+    var rollValue    	=   roll.value;
+	var ageValue		=	age.value;
+	var genderValue		=	gender.value;
+	var catValue		=	category.value;
+	var mrlevelValue	=	mrlevel.value;
+	var vilevelValue	=	vilevel.value;
+	var schoolNameValue	=	schoolName.value;
+	var contactValue    =   contact.value;
+	var emailValue      =   email.value;
+    //showOverlayOnRowIndex(index);
+	
+    details.set("USERNAME", nameValue);
+    details.set("ROLLNUMBER",rollValue);
+    details.set("GENDER",genderValue);
+    details.set("AGE", parseInt(ageValue));
+    details.set("CATEGORY", catValue);
+    details.set("event1", null);
+    details.set("event2", null);
+    details.set('school', schoolNameValue);
+	details.set('EMAIL', emailValue);
+	details.set('PHONE', contactValue);
+    if(catValue == "MR") {
+        details.set("LEVEL", mrlevelValue);
+    } else if (catValue == "VI") {
+        details.set("LEVEL", vilevelValue);
+    }
+	console.log('go on');
+	var checkLength         =   checkedBoxes.length;
+    checkedBoxes.each(function(i) {
+        var eventsClass     =   Parse.Object.extend("EVENTS");
+        var query           =   new Parse.Query(eventsClass);
+        query.get(this.getAttribute('id'), {
+            success:function(obj) {
+                if (i == 0) {
+                    details.set('event1', obj);
+                } else if (i == 1) {
+                    details.set('event2', obj);
+                }
+                if (i == checkLength - 1) {
+                    details.save(null, {
+                        success: function(studentObj) {
+                            alert("You have been successfully registered!");
+                            window.location= "indRegistration.html";
+                        },
+                        error: function(studentObj, error) {
+                            alert('Failed to create new object, with error code: ' + error.message);
+                        }
+                    });
+                }
+				
+				
+            }, error: function (obj) {
+            }
+        });
+    });
+				
+};
+
+function levelDisplay(){
+	var category        =   document.getElementById("category");
+	var catValue		=	category.value;
+	if(catValue==="VI"){
+		console.log("VI");
+		document.getElementById("VILevel").style.display = 'block';
+		document.getElementById("MRLevel").style.display = 'none';
+		document.getElementById("VILevel").appendChild(document.createElement('br'));
+		//document.getElementById("nl").innerHtml='<br />';
+		}
+	else if(catValue==="MR"){
+		console.log("MR");
+		document.getElementById("MRLevel").style.display = 'block';
+		document.getElementById("VILevel").style.display = 'none';
+		document.getElementById("MRLevel").appendChild(document.createElement('br'));
+		//document.getElementById("nl").innerHtml='<br />';
+		}
+	else{	
+		document.getElementById("MRLevel").style.display = 'none';
+		document.getElementById("VILevel").style.display = 'none';
+		
+		}
+	eventDisplay();
+}
+
+function eventDisplay(){
+	console.log('Displaying Events');
+	var age         	=   document.getElementById("age");
+	var gender        	=   document.getElementById("gender");
+	var category        =   document.getElementById("category");
+	var mrlevel         =   document.getElementById("mrlevel");
+	var vilevel         =   document.getElementById("vilevel");
+	var ageValue		=	age.value;
+	var genderValue		=	gender.value;
+	var catValue		=	category.value;
+	var mrlevelValue	=	mrlevel.value;
+	var vilevelValue	=	vilevel.value;
+	var eventsClass     =   Parse.Object.extend("EVENTS");
+	var container       =   document.getElementById('eventRow');
+    var query           =   new Parse.Query(eventsClass);
+	query.equalTo("GENDER", genderValue);
+    query.lessThanOrEqualTo("AGE_MIN", parseInt(ageValue));
+    query.greaterThanOrEqualTo("AGE_MAX", parseInt(ageValue));
+    query.equalTo("D_Category", catValue);
+	if(catValue == "MR") {
+        query.equalTo("D_Level_1_2_3", parseInt(mrlevelValue));
+		console.log(parseInt(mrlevelValue));
+    } else if (catValue == "VI") {
+        query.equalTo("D_Level_1_2_3", parseInt(vilevelValue));
+		console.log(parseInt(vilevelValue));
+    }
+	query.limit(1000);
+	query.find({
+        success:function(results) {
+			console.log('Successfully Retrieved');
+			console.log(results);
+			console.log(results.length);
+			while (container.hasChildNodes()) {
+                container.removeChild(container.lastChild);
+            }
+			populateEventCellWithEvents(results);
+        }, 
+        error: function(error) {
+            console.log('Failure retrieveing events: ' + error.message );
+        }
+    });
+};
+
+function populateEventCellWithEvents(events) {
+    var container           =   document.getElementById('eventRow');
+    events.forEach(function(event) {
+        //console.log(event.id);
+        var checkbox =   document.createElement('input');
+        checkbox.type       =   "checkbox";
+        checkbox.id         =   event.id;
+        var label           =   document.createElement('label')
+        label.htmlFor       =   event.id;
+        label.appendChild(document.createTextNode(event.get('EVENT_NAME')));
+        container.appendChild(checkbox);
+        container.appendChild(label);
+        container.appendChild(document.createElement('br'));
+		
+    });
+	
+};
+
+</script>						

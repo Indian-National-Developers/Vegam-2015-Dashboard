@@ -1,10 +1,14 @@
 
-var schoolObject = null;
-var studentsList = null;
+var schoolObject    =   null;
+var studentsList    =   null;
+var eventsList      =   null;
+var eventsObj       =   null;
+var eventParticipantList = null;
 
 $( document ).ready(function() {
 
     Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+	
     var UserClass = Parse.Object.extend("User");
     var query = new Parse.Query(UserClass);
     query.find({
@@ -19,10 +23,6 @@ $( document ).ready(function() {
 
     $('#retrieveEventsButton').click(function(){
         getEvents();
-    });
-
-    $('#eventListButton').click(function(){
-        eventStudentRetrieval();
     });
 
     $('#pageLoginButton').click(function(){
@@ -100,7 +100,7 @@ function schoolStudentRetrieval(){
                 success:function(students) {
                     studentsList =   students;
                     if (students.length) {
-                        populateTable();
+                        populateStudentTable();
                     }
                 }, error:function(stobj, sterr) {
                     console.log('Error fetching student' + sterr.message);
@@ -146,7 +146,7 @@ function eventStudentRetrieval() {
             studentsList.push.apply(studentsList, students);
             flagIndex++;
             if (flagIndex == 2) {
-                populateTable();
+                populateStudentTable();
             }
         }, error:function(stobj, sterr) {
         }
@@ -164,7 +164,7 @@ function eventStudentRetrieval() {
             studentsList.push.apply(studentsList, students);
             flagIndex++;;
             if (flagIndex == 2) {
-                populateTable();
+                populateStudentTable();
             }
         }, error:function(stobj, sterr) {
         }
@@ -202,9 +202,9 @@ function populateEvents(eventList) {
 
 };
 
-function populateTable() {
+function populateStudentTable() {
 
-    studentsList.forEach(function(stud, i) {
+studentsList.forEach(function(stud, i) {
         var categ       =   stud.get('CATEGORY');
         var levl        =   stud.get('LEVEL');
         var index       =   i + 1
@@ -275,7 +275,137 @@ function populateTable() {
         debug: true
     }); 
 
-};
+}
+
+function populateEventTable() {
+
+    eventsList.forEach(function(even, i) {
+        var index       =   i + 1
+		var ageMax		=	even.get('AGE_MAX');
+		var ageMin		=	even.get('AGE_MIN');
+		var category	=	even.get('D_Category');
+		var level		=	even.get('D_Level_1_2_3');
+		var eventName   =   even.get('EVENT_NAME');
+		var gender		=	even.get('GENDER');
+		var time		=	even.get('TIME');
+		
+        $('#eventTable').append(
+            "<tr id='eventRow" + (i+1) + "'>"+
+            "<td> " + (i+1) + " </td>"+
+            "<td> " + ageMin + ' - ' + ageMax + " </td>"+
+            "<td> " + category + " </td>"+
+            "<td> " + level + " </td>"+
+            "<td> " + eventName + " </td>"+
+            "<td> " + gender + " </td>"+
+            "<td> " + time + " </td>"+
+            "<td id='eventRowCount" + (i+1) + "'> - </td>"+
+            "<td> <div class='button' onclick='getEventParticipants(" + i + ")' style='width: 60px'>List</div> </td>"+
+            "<td> <div id='freezeButton" + i + "' data-eventid='" + even.id + "'  class='button' onclick='toggleFreeze(" + i + ")' style='width: 60px'>Freeze</div> </td>"+
+            "</tr>");
+
+        eventParticipantList = [];
+        var studClass   =   Parse.Object.extend("Student");
+        var ev1Query    =   new Parse.Query(studClass);
+        ev1Query.equalTo("event1", {
+                        __type: "Pointer",
+                        className: "EVENTS",
+                        objectId: even.id
+        });
+        var ev2Query    =   new Parse.Query(studClass);
+        ev2Query.equalTo("event2", {
+                        __type: "Pointer",
+                        className: "EVENTS",
+                        objectId: even.id
+        });
+        var studQuery   =   Parse.Query.or(ev1Query, ev2Query);
+        studQuery.include('school');
+        studQuery.find({ 
+            success: function(results) {
+                console.log(results.length);
+                $('#eventRowCount' + index).html(results.length);
+                eventParticipantList[i] = results;
+                if (index == 140) {
+                    $("#eventTable").tablesorter(); 
+                }
+            },
+            error: function(error) {
+            }  
+        });
+
+	});
+
+    $('#eventTable').append('</tbody>');
+    
+
+}
+
+function getEventParticipants(eventIndex) {
+
+    $('#studTable').empty();
+
+    var eventObj        =   eventsList[eventIndex];
+    var eventDesc       =   "Event: " + eventObj.get("EVENT_NAME") +
+                            ", " + eventObj.get("GENDER") + 
+                            ", " + eventObj.get("AGE_MIN") + " - " + eventObj.get("AGE_MAX") + 
+                            ", " + eventObj.get("D_Category") + 
+                            ", " + eventObj.get("D_Leve_1_2_3");
+    $('#studTableDescription').html(eventDesc);
+
+    $('#studTable').append(
+        "<thead><tr>"+
+        "<th width='6%'> No </th>"+
+        "<th width='10%'> Unique # </th>"+
+        "<th width='12%'> Name </th>"+
+        "<th width='12%'> Roll No. </th>"+
+        "<th> School </th>"+
+        "</tr></thead><tbody>");
+
+    studentsList = eventParticipantList[eventIndex];
+ 
+    studentsList.forEach(function(stud, i) {
+        var index       =   i + 1
+        var levelString =   "";
+        $('#studTable').append(
+            "<tr id='studRow" + (i+1) + "'>"+
+            "<td> " + (i+1) + " </td>"+
+            "<td> " + (i+1) + " </td>"+
+            "<td> " + stud.get('USERNAME') + " </td>"+
+            "<td> " + stud.get('ROLLNUMBER') + " </td>"+
+            "<td id='studRowSchool" + (i+1) + "'> " + stud.get('school').get('username') + " </td>"+
+            "</tr>");
+    });
+
+    $('#studTable').append('</tbody>');
+    $("#studTable").tablesorter();
+
+}
+
+function toggleFreeze(eventIndex) {
+
+    var buttonObj       =   $('#freezeButton' + eventIndex);
+    var buttonText      =   buttonObj.text();
+    var eventID         =   buttonObj.attr('data-eventid');
+
+    buttonObj.text("...");
+
+    var eventObject = Parse.Object.extend("EVENTS");
+    var evAQuery = new Parse.Query(eventObject);
+    evAQuery.get(eventID, {
+        success: function(evv) {
+            if (buttonText === 'Freeze') {
+                buttonObj.text("Unfreeze");
+                evv.set('freeze', 0);
+            } else {
+                buttonObj.text("Freeze");
+                evv.set('freeze', 1);
+            }
+            evv.save();
+        },
+        error: function(object, error) {
+        }
+    });
+
+}
 
 function categorySelect() {
 
@@ -289,5 +419,6 @@ function categorySelect() {
         document.getElementById("VILevelComboField").style.display = 'none';
         document.getElementById("MRLevelComboField").style.display = 'none';
     }
+
 }
 

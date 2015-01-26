@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Sunil, Priya, Thina, saiy2k">
+        <title>Chest Number Dump | Vegam 2k15</title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="../vegam.css"/>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.2.min.js"></script>
+
+        <script>
+
+            $( document ).ready(function() {
+                Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+
+                var query       =   new Parse.Query(Parse.Object.extend('Student'));
+                query.limit(1000);
+                query.ascending('createdAt');
+                query.find({
+                    success:function(results) {
+                        populateStudTable(results);
+                    }, 
+                    error: function(error) {
+                        console.log('Failure retrieveing Students' + error.message );
+                    }
+                });
+            });
+
+            function populateStudTable(studList) {
+
+                $('#studTable').empty();
+                $('#studTable').append(
+                    "<thead><tr>"+
+                    "<th width='4%'> No </th>"+
+                    "<th width='48%'> Name </th>"+
+                    "<th width='48%'> ChestNo </th>"+
+                    "</tr></thead><tbody>");
+
+                studList.forEach(function(stud, i) {
+                    var categ       =   stud.get('CATEGORY');
+                    var level       =   stud.get('LEVEL'); 
+
+                    var prefix      =   categ;
+
+                    if (categ == "MR") {
+                        prefix      +=  level == "1" ? "A" : level == "2" ? "B" : "C";
+                    } else if (categ == "VI") {
+                        prefix      +=  level == "1" ? "A" : "B";
+                    }
+
+                    $('#studTable').append(
+                        "<tr id='schoolRow" + (i+1) + "'>"+
+                        "<td> " + (i+1) + " </td>"+
+                        "<td> " + stud.get('USERNAME') + " </td>"+
+                        "<td> " + prefix + pad(i, 3) + " </td>"+
+                        "</tr>");
+                    });
+
+                $('#studTable').append('</tbody>');
+
+            }
+
+            function pad(n, width, z) {
+                z = z || '0';
+                n = n + '';
+                return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+            }
+
+        </script>
+    </head>
+
+    <body>
+
+        <!-- Top section contains the Vegam Title and Page Title -->
+        <div class="header"> 
+            <h1> <a href="admin.html"> Vegam 2k15 </a> </h1>
+            <h3> Chest Number </h3>
+        </div>
+
+        <!-- Main cotent section that contains all the page controls -->
+        <div class="content" style="text-align: center">
+            <table id="studTable" width="400px" align="center" border="1" >
+            </table>
+            <br/>
+            <br/>
+        </div>
+
+        <!-- Floating logo stick to the bottom left of the screen -->
+        <img class="logo" src="../css.jpg" style="right:auto; left:1%; z-index:-1" width="150" height="150"/>
+
+        <!-- Floating logo stick to the bottom right of the screen -->
+        <img class="logo" src="../k.png"/>
+
+        <!-- Footer that sticks to the bottom of the screen (not document) -->
+        <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a>. Use <a href="https://www.google.com/chrome/browser/desktop/">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> to properly use this site.</p>
+
+    </body>
+</html>
