@@ -73,6 +73,7 @@ function schoolStudentRetrieval(){
     $('#studTable').append(
         "<thead><tr>"+
         "<th width='4%'> No </th>"+
+        "<th width='4%'> # </th>"+
         "<th width='12%'> Name </th>"+
         "<th width='6%'> Roll No. </th>"+
         "<th width='4%'> Age </th>"+
@@ -214,9 +215,19 @@ studentsList.forEach(function(stud, i) {
         } else if (categ == 'VI') {
             levelString =   levl == "1" ? "partially blind" : "totally blind";
         }
+
+        var prefix      =   categ;
+
+        if (categ == "MR") {
+            prefix      +=  levl == "1" ? "A" : levl == "2" ? "B" : "C";
+        } else if (categ == "VI") {
+            prefix      +=  levl == "1" ? "A" : "B";
+        }
+
         $('#studTable').append(
             "<tr id='studRow" + (i+1) + "'>"+
             "<td> " + (i+1) + " </td>"+
+            "<td> " + prefix + pad(stud.get('uniq'), 3) + " </td>"+
             "<td> " + stud.get('USERNAME') + " </td>"+
             "<td> " + stud.get('ROLLNUMBER') + " </td>"+
             "<td> " + stud.get('AGE') + " </td>"+
@@ -288,7 +299,8 @@ function populateEventTable() {
 		var eventName   =   even.get('EVENT_NAME');
 		var gender		=	even.get('GENDER');
 		var time		=	even.get('TIME');
-		
+        var freezeText  =   even.get('freeze') == 1 ? "Unfreeze" : "Freeze";
+
         $('#eventTable').append(
             "<tr id='eventRow" + (i+1) + "'>"+
             "<td> " + (i+1) + " </td>"+
@@ -300,7 +312,7 @@ function populateEventTable() {
             "<td> " + time + " </td>"+
             "<td id='eventRowCount" + (i+1) + "'> - </td>"+
             "<td> <div class='button' onclick='getEventParticipants(" + i + ")' style='width: 60px'>List</div> </td>"+
-            "<td> <div id='freezeButton" + i + "' data-eventid='" + even.id + "'  class='button' onclick='toggleFreeze(" + i + ")' style='width: 60px'>Freeze</div> </td>"+
+            "<td> <div id='freezeButton" + i + "' data-eventid='" + even.id + "'  class='button' onclick='toggleFreeze(" + i + ")' style='width: 60px'>" + freezeText + "</div> </td>"+
             "</tr>");
 
         eventParticipantList = [];
@@ -321,7 +333,6 @@ function populateEventTable() {
         studQuery.include('school');
         studQuery.find({ 
             success: function(results) {
-                console.log(results.length);
                 $('#eventRowCount' + index).html(results.length);
                 eventParticipantList[i] = results;
                 if (index == 140) {
@@ -348,29 +359,38 @@ function getEventParticipants(eventIndex) {
                             ", " + eventObj.get("GENDER") + 
                             ", " + eventObj.get("AGE_MIN") + " - " + eventObj.get("AGE_MAX") + 
                             ", " + eventObj.get("D_Category") + 
-                            ", " + eventObj.get("D_Leve_1_2_3");
+                            ", " + eventObj.get("D_Level_1_2_3");
     $('#studTableDescription').html(eventDesc);
 
     $('#studTable').append(
         "<thead><tr>"+
         "<th width='6%'> No </th>"+
-        "<th width='10%'> Unique # </th>"+
+        "<th width='10%'> Chest No </th>"+
         "<th width='12%'> Name </th>"+
-        "<th width='12%'> Roll No. </th>"+
         "<th> School </th>"+
         "</tr></thead><tbody>");
 
     studentsList = eventParticipantList[eventIndex];
  
+    var categ = eventObj.get('D_Category');
+    var levl = eventObj.get('D_Level_1_2_3');
     studentsList.forEach(function(stud, i) {
         var index       =   i + 1
         var levelString =   "";
+
+        var prefix      =   categ;
+
+        if (categ == "MR") {
+            prefix      +=  levl == "1" ? "A" : levl == "2" ? "B" : "C";
+        } else if (categ == "VI") {
+            prefix      +=  levl == "1" ? "A" : "B";
+        }
+
         $('#studTable').append(
             "<tr id='studRow" + (i+1) + "'>"+
             "<td> " + (i+1) + " </td>"+
-            "<td> " + (i+1) + " </td>"+
+            "<td> " + prefix + pad(stud.get('uniq'), 3) + " </td>"+
             "<td> " + stud.get('USERNAME') + " </td>"+
-            "<td> " + stud.get('ROLLNUMBER') + " </td>"+
             "<td id='studRowSchool" + (i+1) + "'> " + stud.get('school').get('username') + " </td>"+
             "</tr>");
     });
@@ -392,12 +412,14 @@ function toggleFreeze(eventIndex) {
     var evAQuery = new Parse.Query(eventObject);
     evAQuery.get(eventID, {
         success: function(evv) {
-            if (buttonText === 'Freeze') {
+                console.log('freezing... ' + evv.id);
+                console.log(buttonText);
+            if (buttonText == 'Freeze') {
                 buttonObj.text("Unfreeze");
-                evv.set('freeze', 0);
+                evv.set('freeze', 1);
             } else {
                 buttonObj.text("Freeze");
-                evv.set('freeze', 1);
+                evv.set('freeze', 0);
             }
             evv.save();
         },
@@ -422,3 +444,8 @@ function categorySelect() {
 
 }
 
+function pad(n, width, z) {
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}

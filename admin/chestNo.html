@@ -17,6 +17,7 @@
                 var query       =   new Parse.Query(Parse.Object.extend('Student'));
                 query.limit(1000);
                 query.ascending('createdAt');
+                query.include('school');
                 query.find({
                     success:function(results) {
                         populateStudTable(results);
@@ -33,10 +34,12 @@
                 $('#studTable').append(
                     "<thead><tr>"+
                     "<th width='4%'> No </th>"+
-                    "<th width='48%'> Name </th>"+
-                    "<th width='48%'> ChestNo </th>"+
+                    "<th width='25%'> Name </th>"+
+                    "<th width='25%'> ChestNo </th>"+
+                    "<th> School </th>"+
                     "</tr></thead><tbody>");
 
+                var inde = 1;
                 studList.forEach(function(stud, i) {
                     var categ       =   stud.get('CATEGORY');
                     var level       =   stud.get('LEVEL'); 
@@ -53,9 +56,11 @@
                         "<tr id='schoolRow" + (i+1) + "'>"+
                         "<td> " + (i+1) + " </td>"+
                         "<td> " + stud.get('USERNAME') + " </td>"+
-                        "<td> " + prefix + pad(i, 3) + " </td>"+
+                        "<td> " + prefix + pad(stud.get('uniq'), 3) + " </td>"+
+                        "<td> " + stud.get('school').get('username') + " </td>"+
                         "</tr>");
-                    });
+                });
+
 
                 $('#studTable').append('</tbody>');
 
@@ -80,7 +85,7 @@
 
         <!-- Main cotent section that contains all the page controls -->
         <div class="content" style="text-align: center">
-            <table id="studTable" width="400px" align="center" border="1" >
+            <table id="studTable" width="800px" align="center" border="1" >
             </table>
             <br/>
             <br/>

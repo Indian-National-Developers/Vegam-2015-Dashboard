@@ -456,11 +456,19 @@ function saveButtonClick(studentReg, index){
                     studentReg.set('event2', obj);
                 }
                 if (i == checkLength - 1) {
-                    studentReg.save(null, {
-                        success: function(studentObj) {
-                        },
-                        error: function(studentObj, error) {
-                            alert('Failed to create new object, with error code: ' + error.message);
+
+                    var masterClass     =   Parse.Object.extend("master");
+                    var mquery          =   new Parse.Query(masterClass);
+                    mquery.get("3APAvqOM26", {
+                        success: function(masterData) {
+                            if (studentReg.get('uniq') == undefined) {
+                                console.log(masterData.get('freeStudID'));
+                                studentReg.set('uniq', masterData.get('freeStudID'));
+                                masterData.increment('freeStudID');
+                                masterData.save();
+                            }
+                            studentReg.save();
+                        }, error: function(object, error) {
                         }
                     });
                 }
