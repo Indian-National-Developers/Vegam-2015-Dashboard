@@ -63,28 +63,36 @@
                 });
             });
 
-function newRow($table,cols){
-    $row = $('<tr/>');
-    for(i=0; i<cols.length; i++){
-        $col = $('<td/>');
-        $col.append(cols[i]);
-        $row.append($col);
-    }
-    $table.append($row);
-}
+            function newRow($table,cols){
+                $row = $('<tr/>');
+                for(i=0; i<cols.length; i++){
+                    $col = $('<td/>');
+                    $col.append(cols[i]);
+                    $row.append($col);
+                }
+                $table.append($row);
+            }
 
             function processStudentList(studList) {
 
                 // split the linear student array into a hierarchial array based on school
                 var masterArray = _.groupBy(studList, function(sObj) { return sObj.get('school').get('username'); });
 
+                var floater = $('<table/>', {'border': '1px', 'align': 'center', 'style': 'position:fixed; left:0px; top: 0px; background-color:#fee; table-layout:fixed; font-size:9px; width:280px; overlay: hidden'});
+                $(document.body).append(floater);
+
                 // loop through each school
                 _.each(masterArray, function(schStudArray, schoolName, list) {
                     console.log('Processing ' + schoolName + ' - ' + schStudArray.length);
 
+                    //var floaterDiv = $('<a/>', {'href': '#' + schoolName, 'html': schoolName});
+                        $(floater).append('<tr><td style="white-space: nowrap; overflow: hidden; text-overflow:ellipsis;"><a href="#' + schoolName + '"> ' + schoolName + '</a></td></tr>');
+                    //newRow(floater, [floaterDiv]);
+
                     var table = $('<table/>', {'width': '500px', 'border': '1px', 'align': 'center'});
+                    var tableAnchor = $('<a/>', {'name': schoolName} );
                     var tableTitle = $('<h4/>', {'html': schoolName, 'style': 'background-color: #afa'} );
-                    newRow(table, [ $('<div>'), $('<div>'), tableTitle]);
+                    newRow(table, [ $('<div>'), tableAnchor, tableTitle]);
 
                     $('#mainContent').append(table);
                     $('#mainContent').append('<br/>');
