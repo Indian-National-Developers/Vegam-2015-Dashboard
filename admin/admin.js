@@ -85,7 +85,8 @@ function schoolStudentRetrieval(){
         "<th> School </th>"+
         "</tr></thead><tbody>");
 
-   var schoolName = document.getElementById('userNameTextBox').value;
+    var schoolName = document.getElementById('userNameTextBox').value;
+    $('#studTableDescription').html(schoolName);
 
     var UserClass = Parse.Object.extend("User");
     var query = new Parse.Query(UserClass);
@@ -355,11 +356,26 @@ function getEventParticipants(eventIndex) {
     $('#studTable').empty();
 
     var eventObj        =   eventsList[eventIndex];
-    var eventDesc       =   "Event: " + eventObj.get("EVENT_NAME") +
-                            ", " + eventObj.get("GENDER") + 
-                            ", " + eventObj.get("AGE_MIN") + " - " + eventObj.get("AGE_MAX") + 
-                            ", " + eventObj.get("D_Category") + 
-                            ", " + eventObj.get("D_Level_1_2_3");
+
+    var categ           =   eventObj.get('D_Category');
+    var levl            =   eventObj.get('D_Level_1_2_3');
+    var gender          =   eventObj.get('GENDER');
+    var prefix          =   categ;
+
+    var levelText       =   "";
+    if (categ == "MR") {
+        prefix          +=  levl == "1" ? "A" : levl == "2" ? "B" : "C";
+        levelText       =   levl == "1" ? "Mild" : levl == "2" ? "Moderate" : "Severe";
+    } else if (categ == "VI") {
+        prefix          +=  levl == "1" ? "A" : "B";
+        levelText       =   levl == "1" ? "Partially Blind" : "Totally Blind";
+    }
+
+    var eventDesc       =   categ +
+                            " - " + levelText  + 
+                            " " + eventObj.get("AGE_MIN") + " - " + eventObj.get("AGE_MAX") +
+                            " " + (gender == "F" ? "Girls" : "Boys") + 
+                            " --- " + eventObj.get("EVENT_NAME");
     $('#studTableDescription').html(eventDesc);
 
     $('#studTable').append(
@@ -370,21 +386,11 @@ function getEventParticipants(eventIndex) {
         "<th> School </th>"+
         "</tr></thead><tbody>");
 
-    studentsList = eventParticipantList[eventIndex];
- 
-    var categ = eventObj.get('D_Category');
-    var levl = eventObj.get('D_Level_1_2_3');
+    studentsList = _.shuffle(_.shuffle(eventParticipantList[eventIndex]));
+
     studentsList.forEach(function(stud, i) {
         var index       =   i + 1
         var levelString =   "";
-
-        var prefix      =   categ;
-
-        if (categ == "MR") {
-            prefix      +=  levl == "1" ? "A" : levl == "2" ? "B" : "C";
-        } else if (categ == "VI") {
-            prefix      +=  levl == "1" ? "A" : "B";
-        }
 
         $('#studTable').append(
             "<tr id='studRow" + (i+1) + "'>"+

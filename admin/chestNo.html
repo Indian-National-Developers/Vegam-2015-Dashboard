@@ -20,7 +20,26 @@
                 query.include('school');
                 query.find({
                     success:function(results) {
-                        populateStudTable(results);
+
+                        var arrResults = [];
+                        arrResults = arrResults.concat(results);
+
+                        var query2       =   new Parse.Query(Parse.Object.extend('Student'));
+                        query2.limit(1000);
+                        query2.skip(1000);
+                        query2.ascending('createdAt');
+                        query2.include('school');
+                        query2.find({
+                            success:function(results) {
+                                arrResults = arrResults.concat(results);
+                                populateStudTable(arrResults);
+                            }, 
+                            error: function(error) {
+                                console.log('Failure retrieveing Students' + error.message );
+                            }
+                        });
+
+                        //populateStudTable(results);
                     }, 
                     error: function(error) {
                         console.log('Failure retrieveing Students' + error.message );
