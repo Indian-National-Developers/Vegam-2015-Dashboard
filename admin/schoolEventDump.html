@@ -3,49 +3,104 @@
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Sunil, Priya, Thina, saiy2k">
-        <title>Chest Number Dump | Vegam 2k15</title>
+        <title> School based Event List | Vegam 2k15</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
         <link type="text/css" rel="stylesheet" href="../vegam.css"/>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.2.min.js"></script>
+        <script type="text/javascript" src="./underscore-min.js"></script>
 
         <script>
+
+            var masterArray = [];
+
+            if (typeof String.prototype.startsWith != 'function') {
+              String.prototype.startsWith = function (str){
+                return this.indexOf(str) == 0;
+              };
+            }
 
             $( document ).ready(function() {
                 Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
 
+                var rawArray    =   [];
                 var query       =   new Parse.Query(Parse.Object.extend('Student'));
-                query.limit(1000);
-                query.ascending('createdAt');
+                query.limit(100);
+                query.ascending('uniq');
                 query.include('school');
+                query.include('event1');
+                query.include('event2');
+/*
+                query.equalTo("school", {
+                            __type: "Pointer",
+                            className: "_User",
+                            objectId: "4uiYUEEdin"
+                        });
+*/
                 query.find({
                     success:function(results) {
-
-                        var arrResults = [];
-                        arrResults = arrResults.concat(results);
-
-                        var query2       =   new Parse.Query(Parse.Object.extend('Student'));
-                        query2.limit(1000);
-                        query2.skip(1000);
-                        query2.ascending('createdAt');
-                        query2.include('school');
-                        query2.find({
-                            success:function(results) {
-                                arrResults = arrResults.concat(results);
-                                populateStudTable(arrResults);
-                            }, 
-                            error: function(error) {
-                                console.log('Failure retrieveing Students' + error.message );
-                            }
-                        });
-
-                        //populateStudTable(results);
+                        rawArray = rawArray.concat(results);
+                        processStudentList(rawArray);
                     }, 
                     error: function(error) {
                         console.log('Failure retrieveing Students' + error.message );
                     }
                 });
             });
+
+function newRow($table,cols){
+    $row = $('<tr/>');
+    for(i=0; i<cols.length; i++){
+        $col = $('<td/>');
+        $col.append(cols[i]);
+        $row.append($col);
+    }
+    $table.append($row);
+}
+
+            function processStudentList(studList) {
+
+                // split the linear student array into a hierarchial array based on school
+                var masterArray = _.groupBy(studList, function(sObj) { return sObj.get('school').get('username'); });
+
+                // loop through each school
+                _.each(masterArray, function(schStudArray, schoolName, list) {
+                    console.log('Processing ' + schoolName + ' - ' + schStudArray.length);
+
+                    var table = $('<table/>', {'width': '800px', 'border': '1px', 'align': 'center'});
+                    var tableTitle = $('<h3/>', {'html': schoolName} );
+                    newRow(table, [tableTitle]);
+
+                    $('#mainContent').append(table);
+                    // deep copy the student objects and create a duplicate set of objects;
+                    // http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
+                    var cloneArray = [];
+                    _.each(schStudArray, function(cloneObj, cloneIndex, cloneList) {
+                        cloneArray.push($.extend(true, [], cloneObj));
+                    });
+                    schStudArray = schStudArray.concat(cloneArray);
+
+                    var alignedStudentArray = [];
+
+                    _.each(schStudArray, function(studObject, studIndex, sList) {
+                        if (studIndex < sList.length / 2) {
+                            studObject.selEvent = studObject.get('event1');
+                        } else { 
+                            studObject.selEvent = studObject.get('event2');
+                        }
+                        if (studObject.selEvent) {
+                            alignedStudentArray.push(studObject);
+                        }
+                    });
+
+                    var index = 0;
+                    var eventBasedSplit = _.groupBy(alignedStudentArray, function(alignStudent) {
+                        return alignStudent.selEvent.id; 
+                    });
+
+                    console.log(eventBasedSplit);
+                });
+            }
 
             function populateStudTable(studList) {
 
@@ -99,11 +154,11 @@
         <!-- Top section contains the Vegam Title and Page Title -->
         <div class="header"> 
             <h1> <a href="admin.html"> Vegam 2k15 </a> </h1>
-            <h3> Chest Number </h3>
+            <h3> School based Event List </h3>
         </div>
 
         <!-- Main cotent section that contains all the page controls -->
-        <div class="content" style="text-align: center">
+        <div id="mainContent" class="content" style="text-align: center">
             <table id="studTable" width="800px" align="center" border="1" >
             </table>
             <br/>
