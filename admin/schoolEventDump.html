@@ -25,7 +25,7 @@
 
                 var rawArray    =   [];
                 var query       =   new Parse.Query(Parse.Object.extend('Student'));
-                query.limit(100);
+                query.limit(1000);
                 query.ascending('uniq');
                 query.include('school');
                 query.include('event1');
@@ -40,7 +40,22 @@
                 query.find({
                     success:function(results) {
                         rawArray = rawArray.concat(results);
-                        processStudentList(rawArray);
+                        var qquery       =   new Parse.Query(Parse.Object.extend('Student'));
+                        qquery.limit(1000);
+                        qquery.skip(1000);
+                        qquery.ascending('uniq');
+                        qquery.include('school');
+                        qquery.include('event1');
+                        qquery.include('event2');
+                        qquery.find({
+                            success:function(results) {
+                                rawArray = rawArray.concat(results);
+                                processStudentList(rawArray);
+                            }, 
+                            error: function(error) {
+                                console.log('Failure retrieveing Students' + error.message );
+                            }
+                        });
                     }, 
                     error: function(error) {
                         console.log('Failure retrieveing Students' + error.message );
@@ -67,11 +82,12 @@ function newRow($table,cols){
                 _.each(masterArray, function(schStudArray, schoolName, list) {
                     console.log('Processing ' + schoolName + ' - ' + schStudArray.length);
 
-                    var table = $('<table/>', {'width': '800px', 'border': '1px', 'align': 'center'});
-                    var tableTitle = $('<h3/>', {'html': schoolName} );
-                    newRow(table, [tableTitle]);
+                    var table = $('<table/>', {'width': '500px', 'border': '1px', 'align': 'center'});
+                    var tableTitle = $('<h4/>', {'html': schoolName, 'style': 'background-color: #afa'} );
+                    newRow(table, [ $('<div>'), $('<div>'), tableTitle]);
 
                     $('#mainContent').append(table);
+                    $('#mainContent').append('<br/>');
                     // deep copy the student objects and create a duplicate set of objects;
                     // http://stackoverflow.com/questions/122102/what-is-the-most-efficient-way-to-clone-an-object
                     var cloneArray = [];
@@ -98,46 +114,52 @@ function newRow($table,cols){
                         return alignStudent.selEvent.id; 
                     });
 
+                    _.each(eventBasedSplit, function(evStuds, evKey) {
+                        var eventObj = evStuds[0].selEvent;
+                        var categ           =   eventObj.get('D_Category');
+                        var levl            =   eventObj.get('D_Level_1_2_3');
+                        var gender          =   eventObj.get('GENDER');
+                        var prefix          =   categ;
+
+                        var levelText       =   "";
+                        if (categ == "MR") {
+                            prefix          +=  levl == "1" ? "A" : levl == "2" ? "B" : "C";
+                            levelText       =   levl == "1" ? "Mild" : levl == "2" ? "Moderate" : "Severe";
+                        } else if (categ == "VI") {
+                            prefix          +=  levl == "1" ? "A" : "B";
+                            levelText       =   levl == "1" ? "Partially Blind" : "Totally Blind";
+                        }
+
+                        var eventDesc       =   categ +
+                                                " - " + levelText  + 
+                                                " " + eventObj.get("AGE_MIN") + " - " + eventObj.get("AGE_MAX") +
+                                                " " + (gender == "F" ? "Girls" : "Boys") + 
+                                                " --- " + eventObj.get("EVENT_NAME");
+
+                        newRow(table, [ $('<div>'), $('<div>'),  $('<h4/>', {'html': eventDesc}) ]);
+
+                        /*
+                        newRow(table, [ $('<b/>', {'html': 'No'}),
+                            $('<b/>', {'html': 'Chest No'}),
+                            $('<b>', {'html': 'Name'}),
+                        ]);
+                        */
+
+                        var studentIndex = 1;
+                        _.each(evStuds, function(finalStud) {
+                          //  var row"<td> " + prefix + pad(stud.get('uniq'), 3) + " </td>"+
+                            newRow(table, [ $('<div/>', {'html': studentIndex++}),
+                                $('<div/>', {'html': prefix + pad(finalStud.get('uniq'), 3)}),
+                                $('<div>', {'html': finalStud.get('USERNAME')}),
+                                    ]);
+
+                        });
+
+
+                    });
+
                     console.log(eventBasedSplit);
                 });
-            }
-
-            function populateStudTable(studList) {
-
-                $('#studTable').empty();
-                $('#studTable').append(
-                    "<thead><tr>"+
-                    "<th width='4%'> No </th>"+
-                    "<th width='25%'> Name </th>"+
-                    "<th width='25%'> ChestNo </th>"+
-                    "<th> School </th>"+
-                    "</tr></thead><tbody>");
-
-                var inde = 1;
-                studList.forEach(function(stud, i) {
-                    var categ       =   stud.get('CATEGORY');
-                    var level       =   stud.get('LEVEL'); 
-
-                    var prefix      =   categ;
-
-                    if (categ == "MR") {
-                        prefix      +=  level == "1" ? "A" : level == "2" ? "B" : "C";
-                    } else if (categ == "VI") {
-                        prefix      +=  level == "1" ? "A" : "B";
-                    }
-
-                    $('#studTable').append(
-                        "<tr id='schoolRow" + (i+1) + "'>"+
-                        "<td> " + (i+1) + " </td>"+
-                        "<td> " + stud.get('USERNAME') + " </td>"+
-                        "<td> " + prefix + pad(stud.get('uniq'), 3) + " </td>"+
-                        "<td> " + stud.get('school').get('username') + " </td>"+
-                        "</tr>");
-                });
-
-
-                $('#studTable').append('</tbody>');
-
             }
 
             function pad(n, width, z) {
@@ -159,10 +181,6 @@ function newRow($table,cols){
 
         <!-- Main cotent section that contains all the page controls -->
         <div id="mainContent" class="content" style="text-align: center">
-            <table id="studTable" width="800px" align="center" border="1" >
-            </table>
-            <br/>
-            <br/>
         </div>
 
         <!-- Floating logo stick to the bottom left of the screen -->
