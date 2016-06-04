@@ -1,0 +1,136 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Sunil, Priya, Thina, saiy2k">
+        <title> ADMIN </title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="vegam.css"/>
+        <link type="text/css" rel="stylesheet" href="libs/tablesorter.css"/>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.parse.com/downloads/javascript/parse-1.3.2.js"></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script type="text/javascript" src="http://www.parsecdn.com/js/parse-1.3.2.min.js"></script>
+        <script type="text/javascript" src="./libs/BlobBuilder.js"></script>
+        <script type="text/javascript" src="./libs/FileSaver.js"></script>
+        <script type="text/javascript" src="./libs/jspdf.js"></script>
+        <script type="text/javascript" src="./adminDisplay.js"></script>
+        <script type="text/javascript" src="./libs/jspdf.plugin.standard_fonts_metrics.js"></script>
+        <script type="text/javascript" src="./libs/jspdf.plugin.split_text_to_size.js"></script>
+        <script type="text/javascript" src="./libs/jspdf.plugin.from_html.js"></script>
+        <script type="text/javascript" src="./libs/jquery.tablesorter.js"></script>
+
+        <style>
+            .header {
+                font-size: 14px;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+
+    <body >
+
+            <!-- Top section contains the Vegam Title and Page Title -->
+            <div class="header" style="background-image:url('vegamVenue.jpg'); background-repeat: no-repeat"> 
+                <h1> <a href="index.html"> Vegam 2k15 </a> </h1>
+                <h3> Admin Panel </h3>
+            </div>
+
+            <!-- Main cotent section that contains all the page controls -->
+            <div class="content">
+
+                <div class="halfColumn" style=" background-color:#ccc; border: 2px solid black; padding: 8px; color: #00248F" >        
+                    
+                    <span style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold; font-size: 18px; margin-bottom:0px">
+                        Age
+                        <input type="text" id="ageTextField" size="3" value="12" />
+                    </span>
+                    
+                    <span id="gender" style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold; margin-bottom:0px"> 
+                        Gender 
+                        <select id="genderComboField" >
+                            <option value="M"> M</option>
+                            <option value="F"> F</option>
+                        </select>
+                    </span>
+
+                    <br/>
+                    <br/>
+
+                    <span id="Disability" style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold"> 
+                        Disability Category 
+                        <select id="categoryComboField" onChange="categorySelect()"> 
+                            <option value="MR">MR</option>
+                            <option value="MD">MD</option>
+                            <option value="HI">HI</option>
+                            <option value="VI">VI</option>
+                        </select>
+                    </span> 
+
+                    <span id="level" style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold">
+                        Disability level 
+                        <select id="MRLevelComboField"> 
+                            <option value="1">MILD</option>
+                            <option value="2">MODERATE</option>
+                            <option value="3">SEVERE</option>
+                        </select>			
+                        <select id="VILevelComboField" style="display:none"> 
+                            <option value="1">Parially Blind</option>
+                            <option value="2">Totally Blind</option>
+                        </select>			
+                    </span>
+
+                    <br/>
+                    <br/>
+
+                    <div id="retrieveEventsButton" class="button" style="width: 160px"> Get Events </div>
+
+                    <br/>
+                    <br/>
+                    
+                    <div style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold">	
+                        <div style="display:block; float:left; width:240px" id="openEventsContainer">
+                            <u>Open Events</u>
+
+                        </div>
+                        <div style="display:block; float:left; width:250px" id="frozeEventsContainer">
+                            <u>Froze Events</u>
+                        </div>
+                    </div>
+                    
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                    <div id="eventListButton" class="button" style="width: 120px"> Get List </div>
+                    
+                </div>
+
+                <div class="halfColumn" style="width: 47%; left:50%; border: 2px solid black; padding: 8px; color: #00248F; background-color:#ccc;">
+                    <div style="background-color:#ccc; border-radius:7px; padding:18px; font-weight: bold; font-size: 18px; margin-bottom:0px">
+                        <div class="smallLabel">School :  </div>
+                        <select id="userNameTextBox" style="width: 160px">
+                        </select>
+                    </div>
+                    <div class="button" onclick="schoolStudentRetrieval()" style="width: 160px">Generate List</div>
+                </div>
+
+            </div>
+            <!-- End of `.content` div -->
+
+            <div class="fullColumn" style="margin-left:1%; border: 2px solid black; color: #00248F; background-color:#ccc;">
+
+                <table id="studTable" align="center" border="1" class="tablesorter" style="width: 100%">
+                </table>
+
+        </div>	
+        <br/> <br/> 
+			
+			
+        <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a>. Use <a href="https://www.google.com/chrome/browser/desktop/">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> to properly use this site.</p>
+
+    </body>
+</html>

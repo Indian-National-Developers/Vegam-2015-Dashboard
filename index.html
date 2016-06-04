@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Sunil, Priya, Thina, saiy2k">
-        <title> Home | Vegam2k15 </title>
+        <title> Home | Vegam2k16 </title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
         <link type="text/css" rel="stylesheet" href="vegam.css"/>
         <link rel="stylesheet" href="static/endcredits.css">
@@ -15,7 +15,11 @@
 
             //Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
             $( document ).ready(function() {
-                Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+                //2K15
+                //Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+
+                //2K16
+                Parse.initialize("xDSozIKPzcsfEtMJSUpqh88nIJ8gyBZOFpmJIjn0", "rqLvdUmxNKcm8o6tLv9aSCabWHxoi4p6ziJ8wDog");
 
                 var UserClass = Parse.Object.extend("User");
                 var query = new Parse.Query(UserClass);
@@ -23,7 +27,7 @@
                     success: function(results) {
                         userSelect  =   document.getElementById('userNameTextBox');
                         results.forEach(function(user) {
-                            userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
+                            //userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
                             console.log(user.get('username'));
                             display();
                         });
@@ -87,7 +91,7 @@
 
             <!-- Top section contains the Vegam Title and Page Title -->
             <div class="header" style="background-image:url('vegamVenue.jpg'); background-repeat: no-repeat; margin-top: -2%; padding-top: 2%;"> 
-                <h1> <a href="index.html"> Vegam 2k15 </a> </h1>
+                <h1> <a href="index.html"> Vegam 2k16 </a> </h1>
                 <h3> Home </h3>
                 <h5> <a href="./How.pdf" target="_blank" style="width: 240px; position: fixed; top:26%; right:0%; background-color:#aaa; z-index:100"> How to use this Portal? </a> </h5>
                 <h5> <a href="http://chennaisocialservice.blogspot.in/2014/03/vegam-2014.html" target="_blank" style="width: 240px; position: fixed; top:30%; right:0%; background-color:#aaa; color:#00f; z-index:100"> Glimpse of Vegam 2014 </a></h3> <br/>
@@ -104,12 +108,19 @@
                 </div>
 				
                 <div class="halfColumn" style="width: 47%; padding-top:1%">
+                    <div style="width: 400px; height: 140px; margin-bottom:20px; color:#333; background-color:#aaa; text-align:center; font-size: 28px;">
+                        <br/>
+                        <br/>
+                        Registrations will open on June 6
+                    </div>
+                    <!--
                     <div class="smallLabel"> School Name </div> <select id="userNameTextBox" style="width: 160px"/> 
                     </select> <br/> <br/>
                     <div class="smallLabel"> Password  </div> <input type="password" id='passwordTextBox' style="width:160px" /> <br/> <br/>
                     <div class="button" onclick="loginButtonClick()" style="margin-right:20px; margin-left:10px;">Login</div>
                     <a href="./schoolRegistration.html" class="button" style="width: 160px">Register School</a> <br/> <br/>
                     <a href="./password.html" style="width: 180px; margin-left: 10px;"> Forgot password? </a> <br/> <br/>
+                    -->
 
                     <!-- 
                     <b>
@@ -122,8 +133,20 @@
 
                     <div style="color: #00246f; border: 2px solid #228; padding: 2%">
                         <h2 style="text-align:center">VEGAM - Athletic Meet for the differently abled</h2> <br/>
-                        As part of our commitment towards differently–abled students participation in extracurricular events CSS has been organizing competitive sports events since 2009. We take pride in encouraging differently-abled students to express their sportsmanship on the field and also to experience the mingling of athletes with other school competitors.  <br/> <br/>
-                        <div style="font-weight:bold; text-align:center">Welcoming you all to take part in another edition of Vegam for the year 2015. 
+                        Vegam is a dedicated sports event for differently abled children started in 2011. This event has gained trust among the special and differently-abled school children across Chennai as they make use of this platform to compete in various Athletic events. <br/> <br/>
+
+                        The number of participants has grown from 250 to 1200, the enthusiasm expressed by the teachers towards their wards performance has been motivating force behind regular participation of some schools. <br> <br/>
+
+                        Many schools from different levels of ability have shown interest in participation and to allow all we have given opportunity for them to compete on a grand scale. Grand scale includes a stadium, athletic track and field, medals and entire ambiance which lifts their spirits up. <br/> <br/>
+
+                        Our goal is every child wins in this arena through medals, cheering and above all every one is treated as a special guest. All these years we have roped in distinguished personalities like service men, serving civil servants, accomplished social workers, Film celebrities and Philanthropists. These people bring with them a lot of good will to this event as has been the case over many years. This year is not going to be any different. <br/> <br/>
+
+                        This event has grown to become a India Book of records event where Maximum number of events were conducted for the participants in a single day in 2015. This year more records will be broken but mere chasing of records is not our goal but more participation of the children means more joy and more happiness shared. <br/> <br/>
+
+                        This year on 16th July we will be hosting our 5th edition of Vegam at Jawaharlal Nehru Stadium, Periamet at 8.30am. Be there. Let your cheer be the loudest. <br/> <br/>
+
+                        <div style="font-weight:bold; text-align:center">Welcoming you all to take part in another edition of Vegam for the year 2016. 
+
                         Now you can register all your nomination through this portal.</div> <br/> <br/>
 
                         <div style="text-align:right; margin-left: 6%; font-style:italic">Chennai Social Service - is a registered NGO working with different sections of society in the Chennai city over last 9 years. To Know More or to Volunteer <a href="http://chennaisocialservice.org/" target="_blank"><b>click here</b></a> </div>
@@ -162,6 +185,12 @@
             <dd>Prithviraj Franklin</dd>
             <dt>Event Organizer</dt>
             <dd>Venkat RV</dd>
+            <h1> ****** </h1>
+            <h1 style="font-size:32px"> Chennai Social Service </h1>
+            <h1> Indian National Developers </h1>
+            <h1> ****** </h1>
+            <h1> Share your Living </h1>
+            <h1> ****** </h1>
             </div>
             <div class="clearfix"></div>
             </div>

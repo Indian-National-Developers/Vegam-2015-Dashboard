@@ -1,0 +1,149 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="author" content="Sunil, Priya, Thina, saiy2k">
+        <title> Home | Vegam2k15 </title>
+        <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+        <link type="text/css" rel="stylesheet" href="vegam.css"/>
+
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script type="text/javascript" src="https://www.parse.com/downloads/javascript/parse-1.3.2.js"></script>
+        <script type="text/javascript">
+
+            //Parse.initialize("avx8N1dxzO7BU1QTkrSGC0ibcowObI9Q4kvikfn2", "ndSz3O9ZMkpjQtaRUrNcLOsVHfbWT9hwxaxSSgO5");
+            $( document ).ready(function() {
+                Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+
+                var UserClass = Parse.Object.extend("User");
+                var query = new Parse.Query(UserClass);
+                query.find({
+                    success: function(results) {
+                        userSelect  =   document.getElementById('userNameTextBox');
+                        results.forEach(function(user) {
+                            userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
+                            console.log(user.get('username'));
+                            display();
+                        });
+                    }, error: function(error) {
+                    }
+                });
+
+                $('#passwordTextBox').keypress(function(e) {
+                    if(e.which == 13) {
+                        loginButtonClick();
+                    }
+                });
+
+            });
+
+            function loginButtonClick() {
+                var uName       =   document.getElementById('userNameTextBox').value;
+                var pass        =   document.getElementById('passwordTextBox').value;
+
+                Parse.User.logIn(uName, pass, {
+                    success: function(user) {
+                        sessionStorage.school   =   user.id;
+                        window.location         =   "studentRegistration.html";
+                    },
+                    error: function(user, error) {
+                        alert('Wrong username or password');
+                        console.log(error); 
+                    }
+                });
+            }
+	        	
+			
+			function display(){
+				var User = Parse.Object.extend("User");
+				var query = new Parse.Query(User);
+				query.count({
+					success: function(count) {
+						// The count request succeeded. Show the count	
+						document.getElementById("schoolnum").innerHTML = ("Number of Registered Schools: " + count);
+					},
+					error: function(error) {
+                        console.log("school count request faild");
+					}
+				});
+				var St = Parse.Object.extend("Student");
+				var squery = new Parse.Query(St);
+				squery.count({
+					success: function(count) {
+						// The count request succeeded. Show the count	
+						document.getElementById("studnum").innerHTML = ("Number of Registered Students: " + count);
+					},
+					error: function(error) {
+                        console.log("school count request faild");
+					}
+				});
+            }
+        </script>
+    </head>
+
+    <body>
+
+            <!-- Top section contains the Vegam Title and Page Title -->
+            <div class="header" style="background-image:url('vegamVenue.jpg'); background-repeat: no-repeat; margin-top: -2%; padding-top: 2%;"> 
+                <h1> <a href="index.html"> Vegam 2k15 </a> </h1>
+                <h3> Home </h3>
+                <h5> <a href="./How.pdf" target="_blank" style="width: 240px; position: fixed; top:26%; right:0%; background-color:#aaa; z-index:100"> How to use this Portal? </a> </h5>
+                <h5> <a href="http://chennaisocialservice.blogspot.in/2014/03/vegam-2014.html" target="_blank" style="width: 240px; position: fixed; top:30%; right:0%; background-color:#aaa; color:#00f; z-index:100"> Glimpse of Vegam 2014 </a></h3> <br/>
+            </div>
+
+            <!-- Main cotent section that contains all the page controls -->
+            <div class="content">
+                <div class="halfColumn" style="border: 2px solid #ccc; padding: 8px; color: #00248F" >
+                    <embed type="application/x-shockwave-flash" src="https://photos.gstatic.com/media/slideshow.swf" width="100%" height="400px" flashvars="host=picasaweb.google.com&hl=en_US&feat=flashalbum&RGB=0x000000&feed=https%3A%2F%2Fpicasaweb.google.com%2Fdata%2Ffeed%2Fapi%2Fuser%2F100029059227283819807%2Falbumid%2F6095961393854178145%3Falt%3Drss%26kind%3Dphoto%26hl%3Den_US" pluginspage="http://www.macromedia.com/go/getflashplayer"></embed>
+                    <div style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold; font-size: 18px; margin-bottom:0px"> Current Status: </div>
+                    <div id="schoolnum" style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold; margin-bottom:0px"> Number of Registered Schools:   </div>
+                    <div id="studnum" style="background-color:#ccc; border-radius: 5px; padding:6px; font-weight: bold"> Number of Registered Students:   </div> <br/>
+                </div>
+				
+                <div class="halfColumn" style="width: 47%; padding-top:1%">
+                    <div class="smallLabel"> School Name </div> <select id="userNameTextBox" style="width: 160px"/> 
+                    </select> <br/> <br/>
+                    <div class="smallLabel"> Password  </div> <input type="password" id='passwordTextBox' style="width:160px" /> <br/> <br/>
+                    <div class="button" onclick="loginButtonClick()" style="margin-right:20px; margin-left:10px;">Login</div>
+                    <a href="./schoolRegistration.html" class="button" style="width: 160px">Register School</a> <br/> <br/>
+                    <a href="./password.html" style="width: 180px; margin-left: 10px;"> Forgot password? </a> <br/> <br/>
+
+                    <!-- 
+                    <b>
+                        <div style="color:#a00; font-size:18px; border: 2px solid #a22; padding: 4px; text-align:center;">
+                            Venue - YMCA college of physical Education, Nandhanam <br/> <br/>
+                            Date - Saturday, 7th February 2015.
+                        </div>
+                    </b> <br/>
+                    -->
+
+                    <div style="color: #00246f; border: 2px solid #228; padding: 2%">
+                        <h2 style="text-align:center">VEGAM - Athletic Meet for the differently abled</h2> <br/>
+                        As part of our commitment towards differently–abled students participation in extracurricular events CSS has been organizing competitive sports events since 2009. We take pride in encouraging differently-abled students to express their sportsmanship on the field and also to experience the mingling of athletes with other school competitors.  <br/> <br/>
+                        <div style="font-weight:bold; text-align:center">Welcoming you all to take part in another edition of Vegam for the year 2015. 
+                        Now you can register all your nomination through this portal.</div> <br/> <br/>
+
+                        <div style="text-align:right; margin-left: 6%; font-style:italic">Chennai Social Service - is a registered NGO working with different sections of society in the Chennai city over last 9 years. To Know More or to Volunteer <a href="http://chennaisocialservice.org/" target="_blank"><b>click here</b></a> </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                </div>
+            </div>
+
+            <!-- Floating logo stick to the bottom left of the screen -->
+            <img class="logo" src="css.jpg" style="right:auto; left:1%; z-index:-1" width="150" height="150"/>
+
+            <!-- Floating logo stick to the bottom right of the screen -->
+            <img class="logo" src="k.png"/>
+
+            <!-- Footer that sticks to the bottom of the screen (not document) -->
+            <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a>. Use <a href="https://www.google.com/chrome/browser/desktop/">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> to properly use this site.</p>
+
+    </body>
+</html>
