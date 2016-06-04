@@ -7,8 +7,12 @@ var eventParticipantList = null;
 
 $( document ).ready(function() {
 
-    Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
-	
+    //2K15
+    //Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+
+    //2K16
+    Parse.initialize("xDSozIKPzcsfEtMJSUpqh88nIJ8gyBZOFpmJIjn0", "rqLvdUmxNKcm8o6tLv9aSCabWHxoi4p6ziJ8wDog");
+
     var UserClass = Parse.Object.extend("User");
     var query = new Parse.Query(UserClass);
     query.find({
@@ -31,7 +35,7 @@ $( document ).ready(function() {
         }
     });
 
-    $.blockUI({ message: $('#loginForm') }); 
+    //$.blockUI({ message: $('#loginForm') }); 
 
 });
 
