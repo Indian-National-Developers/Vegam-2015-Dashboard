@@ -12,7 +12,11 @@ myApp.controller('repeaterController', ['$scope', function ($scope) {
 }]);
 
 // Parse framework Initialization
-Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+// 2k15
+//Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
+
+    //2K16
+    Parse.initialize("xDSozIKPzcsfEtMJSUpqh88nIJ8gyBZOFpmJIjn0", "rqLvdUmxNKcm8o6tLv9aSCabWHxoi4p6ziJ8wDog");
 
 // On document ready
 $( document ).ready(function() {
@@ -101,6 +105,7 @@ function showOverlayOnRowIndex(rowIndex) {
 }
 
 function loadSchoolFromParse() {
+    console.log(sessionStorage);
     var schoolClass     =   Parse.Object.extend("User");
     var squery          =   new Parse.Query(schoolClass);
     squery.get(sessionStorage.school, {
@@ -269,7 +274,7 @@ function generate() {
     pdf.setFontSize(10);
     pdf.text(20, yy, 'Dear Chennai Social Service, ');
     yy += 8; pdf.text(20, yy, 'The names below are the nominated students under different categories who shall represent the school'); 
-    yy += 5; pdf.text(20, yy, 'during Vegam 2015 on 7th February 2015. The students have been informed of the games they are participating');
+    yy += 5; pdf.text(20, yy, 'during Vegam 2016 on 16th July 2016. The students have been informed of the games they are participating');
     yy += 5; pdf.text(20, yy, 'and also are ideally suited for the designated category of the games. ');
     yy += 8; pdf.text(20, yy, 'The list of the students,');
 
@@ -459,8 +464,9 @@ function saveButtonClick(studentReg, index){
 
                     var masterClass     =   Parse.Object.extend("master");
                     var mquery          =   new Parse.Query(masterClass);
-                    mquery.get("3APAvqOM26", {
+                    mquery.get("5R6NQ8pGZe", {
                         success: function(masterData) {
+                            console.log(masterData);
                             if (studentReg.get('uniq') == undefined) {
                                 console.log(masterData.get('freeStudID'));
                                 studentReg.set('uniq', masterData.get('freeStudID'));
@@ -469,6 +475,8 @@ function saveButtonClick(studentReg, index){
                             }
                             studentReg.save();
                         }, error: function(object, error) {
+                            console.log(object);
+                            console.log(error);
                         }
                     });
                 }

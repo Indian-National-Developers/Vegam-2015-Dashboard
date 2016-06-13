@@ -25,9 +25,10 @@
                 var query = new Parse.Query(UserClass);
                 query.find({
                     success: function(results) {
+                        console.log(results);
                         userSelect  =   document.getElementById('userNameTextBox');
                         results.forEach(function(user) {
-                            //userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
+                            userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
                             console.log(user.get('username'));
                             display();
                         });
@@ -112,19 +113,19 @@
                 </div>
 				
                 <div class="halfColumn" style="width: 47%; padding-top:1%">
+                    <!--
                     <div style="width: 400px; height: 140px; margin-bottom:20px; color:#333; background-color:#aaa; text-align:center; font-size: 28px;">
                         <br/>
                         <br/>
-                        Registrations will open on June 6
+                        Registrations will open on June 10
                     </div>
-                    <!--
+                    -->
                     <div class="smallLabel"> School Name </div> <select id="userNameTextBox" style="width: 160px"/> 
                     </select> <br/> <br/>
                     <div class="smallLabel"> Password  </div> <input type="password" id='passwordTextBox' style="width:160px" /> <br/> <br/>
                     <div class="button" onclick="loginButtonClick()" style="margin-right:20px; margin-left:10px;">Login</div>
                     <a href="./schoolRegistration.html" class="button" style="width: 160px">Register School</a> <br/> <br/>
                     <a href="./password.html" style="width: 180px; margin-left: 10px;"> Forgot password? </a> <br/> <br/>
-                    -->
 
                     <!-- 
                     <b>
@@ -141,7 +142,7 @@
 
                         The number of participants has grown from 250 to 1200, the enthusiasm expressed by the teachers towards their wards performance has been motivating force behind regular participation of some schools. <br> <br/>
 
-                        Many schools from different levels of ability have shown interest in participation and to allow all we have given opportunity for them to compete on a grand scale. Grand scale includes a stadium, athletic track and field, medals and entire ambiance which lifts their spirits up. <br/> <br/>
+                        Many schools from different levels of ability have shown interest in participation and to allow all we have given opportunity for them to compete on a grand scale. Grand scale includes a stadium, athletic track and field, medals and entire ambience which lifts their spirits up. <br/> <br/>
 
                         Our goal is every child wins in this arena through medals, cheering and above all every one is treated as a special guest. All these years we have roped in distinguished personalities like service men, serving civil servants, accomplished social workers, Film celebrities and Philanthropists. These people bring with them a lot of good will to this event as has been the case over many years. This year is not going to be any different. <br/> <br/>
 
