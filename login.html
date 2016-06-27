@@ -30,6 +30,9 @@
 		<!--[if (gt IE 9)|!(IE)]><!-->
 		<script src="js/jquery.mobile.customized.min.js"></script>
 		<!--<![endif]-->
+
+        <script type="text/javascript" src="https://www.parse.com/downloads/javascript/parse-1.3.2.js"></script>
+
 		<script>
 			$(document).ready(function(){
 				jQuery('#camera_wrap').camera({
@@ -66,7 +69,6 @@
                         results.forEach(function(user) {
                             userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
                             console.log(user.get('username'));
-                            display();
                         });
                     }, error: function(error) {
                     }
@@ -96,31 +98,6 @@
                 });
             }
 	        	
-			
-			function display(){
-				var User = Parse.Object.extend("User");
-				var query = new Parse.Query(User);
-				query.count({
-					success: function(count) {
-						// The count request succeeded. Show the count	
-						document.getElementById("schoolnum").innerHTML = ("Number of Registered Schools: " + count);
-					},
-					error: function(error) {
-                        console.log("school count request faild");
-					}
-				});
-				var St = Parse.Object.extend("Student");
-				var squery = new Parse.Query(St);
-				squery.count({
-					success: function(count) {
-						// The count request succeeded. Show the count	
-						document.getElementById("studnum").innerHTML = ("Number of Registered Students: " + count);
-					},
-					error: function(error) {
-                        console.log("school count request faild");
-					}
-				});
-            }
         </script>
  
 		<!--[if lt IE 8]>
@@ -156,10 +133,10 @@
 						<div class="menu_block">
 							<nav class="horizontal-nav full-width horizontalNav-notprocessed">
 								<ul class="sf-menu">
-									<li class="current"><a href="index.html" style="color:#2b2929">Home</a></li>
+									<li><a href="index.html" style="color:#2b2929">Home</a></li>
 									<li><a href="./How.pdf" style="color:#2b2929">Guide</a></li>
 									<!--<li><a href="index-2.html">Race Calendar</a></li>-->
-									<li><a href="login.html" style="color:#2b2929">Login/Register</a></li>
+									<li class="current"><a href="login.html" style="color:#2b2929">Login/Register</a></li>
 									<!--<li><a href="#">Contacts</a></li>-->
 									
 								</ul>
@@ -170,39 +147,10 @@
 					<div class="clear"></div>
 				</div>
 			</header>
-			<div class="slider_wrapper">
-				<div id="camera_wrap" class="">
-					<div data-src="images/slide_1.png">
-						<div class="caption fadeIn">
-						Fast as Wind
-
-						</div>
-					</div>
-					<div data-src="images/slide.png">
-						<div class="caption fadeIn">
-												Never Stop	
-						</div>
-					</div>
-					<div data-src="images/slide_3.jpg">
-						<div class="caption fadeIn">
-							Run for Your Health
-						</div>
-					</div>
-				</div>
-			</div>
 
 <!--==============================Content=================================-->
 			<div class="content"><div class="ic"></div>
 				<div class="container_12">
-					<div class="grid_12">
-						<h2 class="center">The Next Vegam</h2>
-						<div class="count_wrap">
-							<div id="counter"></div>
-							<div class="clear"></div>
-							<a href="#">Join Us <br><br> at Nehru Stadium, Periyampet<br> <br> on 16th July 2k16</a>
-						</div><br><br><br><br>
-					 </div>               
-									
 					<div class="clear"></div>
 					<div class="grid_12" style="text-align:center">
 					<div class="smallLabel"> School Name </div> <select id="userNameTextBox" style="width: 160px"/> 

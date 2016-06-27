@@ -30,6 +30,9 @@
 		<!--[if (gt IE 9)|!(IE)]><!-->
 		<script src="js/jquery.mobile.customized.min.js"></script>
 		<!--<![endif]-->
+
+        <script type="text/javascript" src="https://www.parse.com/downloads/javascript/parse-1.3.2.js"></script>
+
 		<script>
 			$(document).ready(function(){
 				jQuery('#camera_wrap').camera({
@@ -56,73 +59,39 @@
 
                 //2K16
                 Parse.initialize("xDSozIKPzcsfEtMJSUpqh88nIJ8gyBZOFpmJIjn0", "rqLvdUmxNKcm8o6tLv9aSCabWHxoi4p6ziJ8wDog");
+                
+                function display(){
+                    var User = Parse.Object.extend("User");
+                    var query = new Parse.Query(User);
+                    query.count({
+                        success: function(count) {
+                            // The count request succeeded. Show the count	
+                            document.getElementById("schoolnum").innerHTML = ("Number of Registered Schools: " + count);
+                        },
+                        error: function(error) {
+                            console.log("school count request faild");
+                        }
+                    });
+                    var St = Parse.Object.extend("Student");
+                    var squery = new Parse.Query(St);
+                    squery.count({
+                        success: function(count) {
+                            // The count request succeeded. Show the count	
+                            document.getElementById("studnum").innerHTML = ("Number of Registered Students: " + count);
+                        },
+                        error: function(error) {
+                            console.log("school count request faild");
+                        }
+                    });
+                }
 
-                var UserClass = Parse.Object.extend("User");
-                var query = new Parse.Query(UserClass);
-                query.find({
-                    success: function(results) {
-                        console.log(results);
-                        userSelect  =   document.getElementById('userNameTextBox');
-                        results.forEach(function(user) {
-                            userSelect.options[userSelect.options.length] = new Option(user.get('username'), user.get('username'));
-                            console.log(user.get('username'));
-                            display();
-                        });
-                    }, error: function(error) {
-                    }
-                });
+                display();
 
-                $('#passwordTextBox').keypress(function(e) {
-                    if(e.which == 13) {
-                        loginButtonClick();
-                    }
-                });
 
             });
-
-            function loginButtonClick() {
-                var uName       =   document.getElementById('userNameTextBox').value;
-                var pass        =   document.getElementById('passwordTextBox').value;
-
-                Parse.User.logIn(uName, pass, {
-                    success: function(user) {
-                        sessionStorage.school   =   user.id;
-                        window.location         =   "studentRegistration.html";
-                    },
-                    error: function(user, error) {
-                        alert('Wrong username or password');
-                        console.log(error); 
-                    }
-                });
-            }
-	        	
-			
-			function display(){
-				var User = Parse.Object.extend("User");
-				var query = new Parse.Query(User);
-				query.count({
-					success: function(count) {
-						// The count request succeeded. Show the count	
-						document.getElementById("schoolnum").innerHTML = ("Number of Registered Schools: " + count);
-					},
-					error: function(error) {
-                        console.log("school count request faild");
-					}
-				});
-				var St = Parse.Object.extend("Student");
-				var squery = new Parse.Query(St);
-				squery.count({
-					success: function(count) {
-						// The count request succeeded. Show the count	
-						document.getElementById("studnum").innerHTML = ("Number of Registered Students: " + count);
-					},
-					error: function(error) {
-                        console.log("school count request faild");
-					}
-				});
-            }
         </script>
- 
+
+
 		<!--[if lt IE 8]>
 			<div style=' clear: both; text-align:center; position: relative;'>
 				<a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
@@ -157,7 +126,7 @@
 							<nav class="horizontal-nav full-width horizontalNav-notprocessed">
 								<ul class="sf-menu ">
 									<li class="current"><a href="index.html" style="color:#2b2929">Home</a></li>
-									<li><a href="./How.pdf" style="color:#2b2929">Guide</a></li>
+									<li><a href="./How.pdf" style="color:#2b2929" target="_blank">Guide</a></li>
 									<!--<li><a href="index-2.html">Race Calendar</a></li>-->
 									<li><a href="login.html" style="color:#2b2929">Login/Register</a></li>
 									<!--<li><a href="#">Contacts</a></li>-->
@@ -194,11 +163,11 @@
 			<div class="content"><div class="ic"></div>
 				<div class="container_12">
 					<div class="grid_12">
-						<h2 class="center">The Next Vegam</h2>
+						<h2 class="center"></h2>
 						<div class="count_wrap">
 							<div id="counter"></div>
 							<div class="clear"></div>
-							<a href="#">Join Us <br><br> at Nehru Stadium, Periyampet<br> <br> on 16th July 2k16</a>
+							<a>Join Us <br><br> at Nehru Stadium, Periyampet<br> <br> on 16th July 2k16</a>
 						</div>
 					</div>
 					<div class="clear"></div>
@@ -388,7 +357,7 @@
 					</div>
 					
 					<div class="copy">
-						<a href="#creditos" target="_blank" name="creditos" style="width: 110px; position: fixed; top:38%; right:0%; background-color:#aaa; color:#00f; z-index:100"> Credits </a>-->
+						<!--<a href="#creditos" target="_blank" name="creditos" style="width: 110px; position: fixed; top:38%; right:0%; background-color:#aaa; color:#00f; z-index:100"> Credits </a>-->
 						<!--<a href="#creditos" style="width: 240px; position: fixed; background-color:#aaa; color:#00f;"> Credits </a>-->
 						<!--<span>Vegam &copy; | <a href="#">Privacy Policy</a></span>-->
 						<a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://think-digital.in">Think-Digital</a>. Use <a href="https://www.google.com/chrome/browser/desktop/">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> to properly use this site.</p>
