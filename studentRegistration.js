@@ -12,7 +12,7 @@ myApp.controller('repeaterController', ['$scope', function ($scope) {
 }]);
 
 // Parse framework Initialization
-// 2k15
+//2k15
 //Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
 
     //2K16
@@ -111,16 +111,24 @@ function loadSchoolFromParse() {
     squery.get(sessionStorage.school, {
         success:function(sobj) {
             var stuClass=   Parse.Object.extend("Student");
+            //var s       =   new stuClass();
             var stQuery =   new Parse.Query(stuClass);
-            schoolObject=   sobj;
+            //schoolObject=   sobj;
+            console.log(sobj.attributes);
             stQuery.equalTo("school", sobj);
             stQuery.ascending("no");
+            //stQuery.limit(1000);
+            //console.log(stQuery);
             stQuery.find({
                 success:function(students) {
                     studentList =   students;
+                    //console.log(students);
                     lindex = 1;
-                    if (students.length)
+                    console.log("isPopulating");
+                    if (students.length){
                         populateFields();
+                        console.log("Populated");
+                    }
                 }, error:function(stobj, sterr) {
                     console.log('Error fetching student' + sterr.message);
                 }
@@ -382,13 +390,13 @@ function updateTable() {
 function ageChange(domObj) {
     var idStr               =   domObj.getAttribute('id');
     var index               =   idStr.slice(8);
-    getEvents(index);
+    //getEvents(index);
 }
 
 function sexSelect(domObj) {
     var idStr               =   domObj.getAttribute('id');
     var index               =   idStr.slice(8);
-    getEvents(index);
+    //getEvents(index);
 }
 
 function categorySelect(domObj) {
@@ -405,19 +413,25 @@ function categorySelect(domObj) {
         document.getElementById("MRLevel" + index).style.display = 'none';
     }
 
-    getEvents(index);
+    //getEvents(index);
 };
 
 function subCategorySelect(domObj) {
     var idStr               =   domObj.getAttribute('id');
     var index               =   idStr.slice(7);
-    getEvents(index);
+    //getEvents(index);
 }
-
+function confirmStudent(domObj){
+    var idStr               =   domObj.getAttribute('id');
+    var index               =   idStr.slice(13);
+    if(confirm('Are you sure? You cannot edit it once you have confirmed it!')){
+        getEvents(index);
+    }
+}
 function saveButtonClick(studentReg, index){
     var categoryValue       =   $('#categoryCombo' + index).val();
     var eventCell           =   $("#eventRow" + index );
-    var checkedBoxes        =   eventCell.find(":checked")
+    var checkedBoxes        =   eventCell.find(":checked");
 
     var studName            =   $('#userNameField' + index).val();
     var studRoll            =   $('#rollNumberField' + index).val();

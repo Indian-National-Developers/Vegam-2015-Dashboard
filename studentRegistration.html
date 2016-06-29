@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="author" content="Sunil, Priya, Thina, saiy2k">
-        <title>Student Registration | Vegam 2k16</title>
+        <title>Student Registration | Vegam 2016</title>
         <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
         <link type="text/css" rel="stylesheet" href="vegam.css"/>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
@@ -18,16 +18,25 @@
         <script type="text/javascript" src="./libs/jspdf.plugin.from_html.js"></script>
     </head>
 
-    <body>
+    <body bgcolor="#FDFDFD">
 
         <!-- Top section contains the Vegam Title and Page Title -->
         <div class="header"> 
-            <h1> <a href="index.html"> Vegam 2k16 </a> </h1>
+            <div style="width: 100%; display: inline-block">
+                        <img src="images/radio.png" style="float: left; width: 15%" >
+                        <img src="images/news7.gif" style="float: right; width: 19%" >
+                            <h1>
+                                VEGAM 2016
+                            </h1>
+                    </div>
             <h3> Student Registration </h3>
         </div>
 
         <!-- Main cotent section that contains all the page controls -->
         <div class="content" style="text-align: center">
+            <h4>This page is used for Student Registration!</h4>
+            <h4>Each student is eligible for only 2 events!!</h4>
+            <h4 style="color: red">If disability level doesn’t match, student will be disqualified</h4>
 			<p><b> MR:</b> Mentally Retarded <b> | VI:</b> Visually Impaired<b> | HI:</b> Hearing Impaired<b> | MD:</b> Multiple Disability </p>
             <table id="studTable" width="800px" align="center" border="1" ng-app="rowRepeaterApp" ng-controller="repeaterController">
                 <tr>
@@ -38,6 +47,7 @@
                     <th width="4%"> Gender </th>
                     <th width="5%"> Disability </th>
                     <th width="5%"> D.Level</th>
+                    <th width="2%"> Confirm </th>
                     <th width="30%"> Events </th>
                     <th width="2%"> Delete </th>
                 </tr>
@@ -74,11 +84,12 @@
                             <option value="2"> Totally Blind </option>
                         </select>
                     </td>
-
+                    <td id="{{'confirm' + n}}" style="padding:2px;text-align:left">
+                        <div onclick="confirmStudent(this)" class="button" style="color: white" id="{{'confirmButton' + n}}"> Confirm </div>
+                    </td>
                     <td id="{{'eventRow' + n}}" style="padding:2px;text-align:left">
 
                     </td>
-
                     <td> 
                         <div class="button" style="width:20px" id="{{'deleteStudButton' + n}}"> X </div>
                     </td>
@@ -91,7 +102,7 @@
         </div>
 
         <!-- Floating logo stick to the bottom left of the screen -->
-        <img class="logo" src="css.jpg" style="right:auto; left:1%; z-index:-1" width="150" height="150"/>
+        <img class="logo" src="CSS.jpg" style="right:auto; left:1%; z-index:-1" width="150" height="150"/>
 
         <!-- Floating logo stick to the bottom right of the screen -->
         <img class="logo" src="k.png"/>
@@ -102,6 +113,8 @@
 
         <!-- Footer that sticks to the bottom of the screen (not document) -->
         <p class="footer"> <a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://plus.google.com/u/0/communities/104455776462402572964">Indian National Developers</a>. Use <a href="https://www.google.com/chrome/browser/desktop/">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> to properly use this site.</p>
-
+        <footer>
+            
+        </footer>
     </body>
 </html>
