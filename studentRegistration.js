@@ -124,7 +124,7 @@ function loadSchoolFromParse() {
                     studentList =   students;
                     //console.log(students);
                     lindex = 1;
-                    console.log("isPopulating");
+                    console.log("isPopulating", students);
                     if (students.length){
                         populateFields();
                         console.log("Populated");
@@ -263,7 +263,7 @@ function checkForDuplicateAndSave() {
 
 function logout() {
     Parse.User.logOut();
-    window.location         =   "index.html";
+    window.location         =   "login.html";
 }
 
 function generate() {
@@ -283,7 +283,8 @@ function generate() {
     pdf.text(20, yy, 'Dear Chennai Social Service, ');
     yy += 8; pdf.text(20, yy, 'The names below are the nominated students under different categories who shall represent the school'); 
     yy += 5; pdf.text(20, yy, 'during Vegam 2016 on 16th July 2016. The students have been informed of the games they are participating');
-    yy += 5; pdf.text(20, yy, 'and also are ideally suited for the designated category of the games. ');
+    yy += 5; pdf.text(20, yy, 'and also are ideally suited for the designated category of the games.');
+    yy += 8; pdf.text(20, yy, 'We understand that any wrong entires about Student disability type/level, will disqualify our school.');
     yy += 8; pdf.text(20, yy, 'The list of the students,');
 
     yy += 2;
@@ -390,13 +391,13 @@ function updateTable() {
 function ageChange(domObj) {
     var idStr               =   domObj.getAttribute('id');
     var index               =   idStr.slice(8);
-    //getEvents(index);
+    getEvents(index);
 }
 
 function sexSelect(domObj) {
     var idStr               =   domObj.getAttribute('id');
     var index               =   idStr.slice(8);
-    //getEvents(index);
+    getEvents(index);
 }
 
 function categorySelect(domObj) {
@@ -413,13 +414,13 @@ function categorySelect(domObj) {
         document.getElementById("MRLevel" + index).style.display = 'none';
     }
 
-    //getEvents(index);
+    getEvents(index);
 };
 
 function subCategorySelect(domObj) {
     var idStr               =   domObj.getAttribute('id');
     var index               =   idStr.slice(7);
-    //getEvents(index);
+    getEvents(index);
 }
 function confirmStudent(domObj){
     var idStr               =   domObj.getAttribute('id');
