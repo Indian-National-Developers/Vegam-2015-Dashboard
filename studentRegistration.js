@@ -113,7 +113,7 @@ function loadSchoolFromParse() {
             var stuClass=   Parse.Object.extend("Student");
             //var s       =   new stuClass();
             var stQuery =   new Parse.Query(stuClass);
-            //schoolObject=   sobj;
+            schoolObject=   sobj;
             console.log(sobj.attributes);
             stQuery.equalTo("school", sobj);
             stQuery.ascending("no");
