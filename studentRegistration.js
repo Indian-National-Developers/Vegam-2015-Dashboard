@@ -12,7 +12,7 @@ myApp.controller('repeaterController', ['$scope', function ($scope) {
 }]);
 
 // Parse framework Initialization
-// 2k15
+//2k15
 //Parse.initialize("BlYcmQmAAvCsDdanA7TJh14KiHrCCqb3z5vPz1Ay", "ovGdJ7e9MJ0wqqcsadYauC9t5aiXvluiuqBrvf3x");
 
     //2K16
@@ -111,16 +111,24 @@ function loadSchoolFromParse() {
     squery.get(sessionStorage.school, {
         success:function(sobj) {
             var stuClass=   Parse.Object.extend("Student");
+            //var s       =   new stuClass();
             var stQuery =   new Parse.Query(stuClass);
             schoolObject=   sobj;
+            console.log(sobj.attributes);
             stQuery.equalTo("school", sobj);
             stQuery.ascending("no");
+            //stQuery.limit(1000);
+            //console.log(stQuery);
             stQuery.find({
                 success:function(students) {
                     studentList =   students;
+                    //console.log(students);
                     lindex = 1;
-                    if (students.length)
+                    console.log("isPopulating", students);
+                    if (students.length){
                         populateFields();
+                        console.log("Populated");
+                    }
                 }, error:function(stobj, sterr) {
                     console.log('Error fetching student' + sterr.message);
                 }
@@ -255,7 +263,7 @@ function checkForDuplicateAndSave() {
 
 function logout() {
     Parse.User.logOut();
-    window.location         =   "index.html";
+    window.location         =   "login.html";
 }
 
 function generate() {
@@ -275,7 +283,8 @@ function generate() {
     pdf.text(20, yy, 'Dear Chennai Social Service, ');
     yy += 8; pdf.text(20, yy, 'The names below are the nominated students under different categories who shall represent the school'); 
     yy += 5; pdf.text(20, yy, 'during Vegam 2016 on 16th July 2016. The students have been informed of the games they are participating');
-    yy += 5; pdf.text(20, yy, 'and also are ideally suited for the designated category of the games. ');
+    yy += 5; pdf.text(20, yy, 'and also are ideally suited for the designated category of the games.');
+    yy += 8; pdf.text(20, yy, 'We understand that any wrong entires about Student disability type/level, will disqualify our school.');
     yy += 8; pdf.text(20, yy, 'The list of the students,');
 
     yy += 2;
@@ -413,11 +422,17 @@ function subCategorySelect(domObj) {
     var index               =   idStr.slice(7);
     getEvents(index);
 }
-
+function confirmStudent(domObj){
+    var idStr               =   domObj.getAttribute('id');
+    var index               =   idStr.slice(13);
+    if(confirm('Are you sure? You cannot edit it once you have confirmed it!')){
+        getEvents(index);
+    }
+}
 function saveButtonClick(studentReg, index){
     var categoryValue       =   $('#categoryCombo' + index).val();
     var eventCell           =   $("#eventRow" + index );
-    var checkedBoxes        =   eventCell.find(":checked")
+    var checkedBoxes        =   eventCell.find(":checked");
 
     var studName            =   $('#userNameField' + index).val();
     var studRoll            =   $('#rollNumberField' + index).val();

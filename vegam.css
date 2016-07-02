@@ -4,10 +4,13 @@
  */
 
 body {
+<<<<<<< HEAD
     margin-top          :   8%;
     background-image    :   url('m.jpg');
     background-repeat   :   no-repeat;
     background-size     :   100%;
+=======
+>>>>>>> 49df2c28909f53088fddfd0c7c9a2d6308443d3a
     display             :   block;
     position            :   relative;
 }
