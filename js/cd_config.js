@@ -5,8 +5,9 @@ $(document).ready(function(){
 	/* ---- Countdown timer ---- */
 
 	$('#counter').countdown({
-        timestamp : new Date("2016-07-16T10:00:00")
-	});
+        // 10.00 AM (IST) - 5.30 gives 4.30
+        timestamp : new Date("2016-07-16T04:30:00")
+});
 
 
 	/* ---- Animations ---- */
