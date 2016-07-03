@@ -64,25 +64,22 @@
 		<link rel="stylesheet" media="screen" href="css/ie.css">
 		<![endif]-->
 	</head>
-	<body class="page1" id="top" >
-		<div class="main">
+	<body class="page1" id="top" style="width: 100%">
+		<div class="main" style="width: 100%">
 <!--==============================header=================================-->
 <header>
-				<div class="container_12">
-					<div class="grid_12" style="height:40px">
-						<h1>
-							VEGAM 2k16</h1>	
+				<div style="width: 100%; display: inline-block">
+							<p align="left" style="float: left;">In association with...</p><img src="images/radio.png" style="float: left; width: 15%" >
+							<img src="images/news7.gif" style="float: right; width: 19%" ><p align="right" style="float: right;">Our Media Partner,</p>
+							<img src="k.png"><p align="center">_an Initiative by Chennai Social Service</p>
 					</div>
-					
-					<div class="clear"></div>
-				</div>
 			</header>
 			
 <!--==============================Content=================================-->
 			<div class="content"><div class="ic"></div>
 				<div class="container_12">
 					<div class="grid_12">
-						<h2 class="center">The Next Vegam</h2>
+						<h3 class="center">The Next Vegam</h3>
 						<div class="count_wrap">
 							<div id="counter"></div>
 							<div class="clear"></div>
@@ -100,8 +97,8 @@
 			<form>
                 <div class="smallLabel"> Student Name *    </div> <input style="width: 34%;" type="text"       id="studName" /> <br/> <br/>
                 <div class="smallLabel"> Roll No    </div> <input style="width: 34%;" type="text"       id="roll" /> <br/> <br/>
-				<div class="smallLabel"> Age *    </div> <input style="width: 34%;" type="text"       id='age' onblur="eventDisplay()" /> <br/> <br/>
-                <div class="smallLabel"> Gender *         </div>	<select id='gender' style="width: 34.5%;" onchange="eventDisplay()"> 
+				<div class="smallLabel"> Age *    </div> <input style="width: 34%;" type="text"       id='age' onblur="" /> <br/> <br/>
+                <div class="smallLabel"> Gender *         </div>	<select id='gender' style="width: 34.5%;" onchange=""> 
 																				
 																				<option value="M">MALE</option>
 																				<option value="F">FEMALE</option>
@@ -116,14 +113,14 @@
 																				<option value="MD">Multi Disordered</option>
 																			</select>
 																			<br/> <br/>
-                <div id="MRLevel" style="display: none"><div class="smallLabel"> Disability level *   </div>  <select id='mrlevel' style="width: 34.5%;" onchange="eventDisplay()"> 
+                <div id="MRLevel" style="display: none"><div class="smallLabel"> Disability level *   </div>  <select id='mrlevel' style="width: 34.5%;" onchange=""> 
 																				
 																				<option value="1">Mild</option>
 																				<option value="2">Moderate</option>
 																				<option value="3">Severe</option>
 																	  </select></div><div id="nl"></div>
 				
-				<div id="VILevel"><div class="smallLabel"> Disability level *   </div>  <select id='vilevel' style="width: 34.5%;" onchange="eventDisplay()"> 
+				<div id="VILevel"><div class="smallLabel"> Disability level *   </div>  <select id='vilevel' style="width: 34.5%;" onchange=""> 
 																				
 																				<option value="1">Partial Blind</option>
 																				<option value="2">Fully Blind</option>
@@ -133,77 +130,16 @@
 				                           
                 <div class="smallLabel"> School Name       </div> <input style="width: 34%;" type="text"       id="schoolName" /> <br/> <br/>
                 <div class="smallLabel"> Phone Number *        </div> <input style="width: 34%;" type="text"       id="phone" /> <br/> <br/>
-                <div class="smallLabel"> e-Mail ID *        </div> <input style="width: 34%;" type="text"       id="email" /> <br/> <br/>
+                <div class="smallLabel"> e-Mail ID *        </div> <input style="width: 34%;" type="text"       id="email" />
+                <div class="button" onclick="eventDisplay()" style="margin-left:"> Confirm </div>
+                 <br/> <br/>
                 <div class="halfColumn" style="color: #00248F;margin: 0 -10em 0 0;font-size: 16px;font-family: Arial;"> Select Event </div> <div id="eventRow" > </div> <br/> <br/>
-                <div class="button" onclick="checkButtonClick()" style="margin-left:20%"> Register </div> <br/> <br/> <br/> <br/>
+                <div class="button" onclick="checkButtonClick()" style="margin-left:"> Register </div>
 			</form>
             </div>
 		
 					
         </div>
-
-					
-					<div class="clear"></div>
-					<div class="container_12" style="color:#aad8ca">
-					<div class="grid_12">
-						<div class="hor_separator"></div>
-						<h3 class="head1 center">We Will Never Stop</h3>
-					</div>
-					<div class="clear"></div>
-					<div class="grid_12">
-						<div id="grid" class="main">
-							<div class="view">
-								<div class="view-back">
-									<span data-icon="" class="fa fa-eye"><span>110</span></span>
-									<span data-icon="" class="fa fa-heart-o"><span>60</span></span>
-									<a href="http://chennaisocialservice.blogspot.in/2014/03/vegam-2014.html">&rarr;</a>
-								</div>
-								<img src="images/img1~2.jpg" />
-							</div>
-							<div class="view">
-								<div class="view-back">
-									<span data-icon="" class="fa fa-eye"><span>20</span></span>
-									<span data-icon="" class="fa fa-heart-o"><span>3</span></span>
-									<a href="#">&rarr;</a>
-								</div>
-								<img src="images/page1_img6.jpg" />
-							</div>
-							<div class="view">
-								<div class="view-back">
-									<span data-icon="" class="fa fa-eye"><span>51</span></span>
-									<span data-icon="" class="fa fa-heart-o"><span>18</span></span>
-									<a href="http://chennaisocialservice.blogspot.in/2015/02/vegam-2k15.html">&rarr;</a>
-								</div>
-								<img src="images/img5.png" />
-							</div>
-							<div class="clear"></div>
-							<div class="view">
-								<div class="view-back">
-									<span data-icon="" class="fa fa-eye"><span>228</span></span>
-									<span data-icon="" class="fa fa-heart-o"><span>62</span></span>
-									<a href="http://chennaisocialservice.blogspot.in/2014/03/vegam-2014.html">&rarr;</a>
-								</div>
-								<img src="images/img2~2.JPG" />
-							</div>
-							<div class="view">
-								<div class="view-back">
-									<span data-icon="" class="fa fa-eye"><span>117</span></span>
-									<span data-icon="" class="fa fa-heart-o"><span>58</span></span>
-									<a href="http://chennaisocialservice.blogspot.in/2014/03/vegam-2014.html">&rarr;</a>
-								</div>
-								<img src="images/img2~4.JPG" />
-							</div>
-							<div class="view">
-								<div class="view-back">
-									<span data-icon="" class="fa fa-eye"><span>22</span></span>
-									<span data-icon="" class="fa fa-heart-o"><span>18</span></span>
-									<a href="http://chennaisocialservice.blogspot.in/2015/02/vegam-2k15.html">&rarr;</a>
-								</div>
-								<img src="images/img4.png" />
-							</div><br><br>
-						</div>
-					</div>
-					</div>
 					<div class="clear"></div>
 				</div>
 			</div>
@@ -243,28 +179,24 @@
             <div class="clearfix"></div>
         </div>-->
 
-            <!-- Floating logo stick to the bottom left of the screen -->
-            <img class="logo" src="css.jpg" style="right:auto; left:1%; z-index:-1" width="150" height="150"/>
-
-            <!-- Floating logo stick to the bottom right of the screen -->
-            <img class="logo" src="gg.jpg"style="  z-index:-1" width="150" height="150"/>
-
 <!--==============================footer=================================-->
-		<footer>
+		<footer style="background-color: #FDFDFD">
 			<div class="container_12">
 				<div class="grid_12">
 					<div class="f_logo">
-						<a href="index.html">Vegam 2k16</a>
+						<a href="index.html" style="font-family: Montserrat">Vegam 2016</a>
 					</div>
-					<div class="f_contacts">
-						<a href="#" class="mail_link"><span class="fa fa-envelope"></span> mail@ sai2k@gmail.com</a>
+					<div style="color: black">
+						For Technical Queries., <a href="mailto:saiy2k@gmail.com" class="mail_link"><i class="fa fa-envelope"></i> sai2k@gmail.com</a>
 						<!--<div class="f_phone"><span class="fa fa-phone"></span>+1 800 559 6580</div>-->
 
 					</div>
 					
-					<div class="copy">
+					<div class="copy" style="color:black">
 						<!--<a href="#creditos" target="_blank" name="creditos" style="width: 110px; position: fixed; top:38%; right:0%; background-color:#aaa; color:#00f; z-index:100"> Credits </a>-->
-						<a href="http://chennaisocialservice.org/"> Chennai Social Service </a> - Powered by <a href="https://think-digital.in">Think-Digital</a>. Use <a href="https://www.google.com/chrome/browser/desktop/">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> to properly use this site.</p>
+						<!--<a href="#creditos" style="width: 240px; position: fixed; background-color:#aaa; color:#00f;"> Credits </a>-->
+						<!--<span>Vegam &copy; | <a href="#">Privacy Policy</a></span>-->
+						<a href="http://chennaisocialservice.org/" target="_blank"> Chennai Social Service </a> &nbsp | &nbsp Powered by <a href="http://think-digital.in" target="_blank">Think-Digital</a> &nbsp | &nbsp Use <a href="https://www.google.com/chrome/browser/desktop/">Chrome</a>, <a href="https://www.mozilla.org/en-US/firefox/new/">Firefox</a> to properly use this site.</p>
 					
 					</div>
 				</div>
@@ -306,7 +238,7 @@
                 //2K16
                 Parse.initialize("xDSozIKPzcsfEtMJSUpqh88nIJ8gyBZOFpmJIjn0", "rqLvdUmxNKcm8o6tLv9aSCabWHxoi4p6ziJ8wDog");
 
-function checkButtonClick(){
+function checkIndividual(){
 
 	var name            =   document.getElementById("studName");
 	var roll          	=   document.getElementById("roll");
@@ -315,7 +247,7 @@ function checkButtonClick(){
 	var category        =   document.getElementById("category");
 	var mrlevel         =   document.getElementById("mrlevel");
 	var vilevel         =   document.getElementById("vilevel");
-	var schoolName      =   document.getElementById("schoolName");
+	//var schoolName      =   document.getElementById("schoolName");
 	var contact         =   document.getElementById("phone");
 	var email           =   document.getElementById("email");
 	
@@ -327,7 +259,7 @@ function checkButtonClick(){
 	var catValue		=	category.value;
 	var mrlevelValue	=	mrlevel.value;
 	var vilevelValue	=	vilevel.value;
-	var schoolNameValue	=	schoolName.value;
+	var schoolNameValue	=	"individual";
 	var contactValue    =   contact.value;
 	var emailValue      =   email.value;
 	
@@ -380,14 +312,14 @@ function checkButtonClick(){
 										alert("Atleast 1 event has to be selected!");
 											else{
 												//registerButtonClick();
-												saveButtonClick();
+												individualSave();
 												console.log("DONE");
 											
 }
 
 };
 
-function saveButtonClick(){
+function individualSave(){
 	var INDIVIDUAL = Parse.Object.extend("INDIVIDUAL");
 	var details = new INDIVIDUAL();
     var categoryValue       =   document.getElementById("category");
@@ -447,7 +379,7 @@ function saveButtonClick(){
                     details.save(null, {
                         success: function(studentObj) {
                             alert("You have been successfully registered!");
-                            window.location= "indRegistration.html";
+                            window.location= "IndRegistration_2016.html";
                         },
                         error: function(studentObj, error) {
                             alert('Failed to create new object, with error code: ' + error.message);
@@ -485,11 +417,13 @@ function levelDisplay(){
 		document.getElementById("VILevel").style.display = 'none';
 		
 		}
-	eventDisplay();
+	//eventDisplay();
 }
 
 function eventDisplay(){
+  if(confirm("Are you sure that the given Details are true? You cannot alter your details!")){
 	console.log('Displaying Events');
+
 	var age         	=   document.getElementById("age");
 	var gender        	=   document.getElementById("gender");
 	var category        =   document.getElementById("category");
@@ -529,6 +463,13 @@ function eventDisplay(){
             console.log('Failure retrieveing events: ' + error.message );
         }
     });
+
+  document.getElementById("age").setAttribute("disabled", true);
+	document.getElementById("gender").setAttribute("disabled", true);
+	document.getElementById("category").setAttribute("disabled", true);
+	document.getElementById("mrlevel").setAttribute("disabled", true);
+	document.getElementById("vilevel").setAttribute("disabled", true);
+  }
 };
 
 function populateEventCellWithEvents(events) {
