@@ -226,10 +226,6 @@
 																				<option value="1">Partial Blind</option>
 																				<option value="2">Fully Blind</option>
                                                                         </select></div><div id="nl"></div> <br/>
-										
-				
-				                           
-                <div class="smallLabel"> School Name       </div> <input style="width: 34%;" type="text"       id="schoolName" /> <br/> <br/>
                 <div class="smallLabel"> Phone Number *        </div> <input style="width: 34%;" type="text"       id="phone" /> <br/> <br/>
                 <div class="smallLabel"> e-Mail ID *        </div> <input style="width: 34%;" type="text"       id="email" />
                 <div class="button" onclick="indEventDisplay()" style="margin-left:"> Confirm </div>
@@ -638,7 +634,10 @@ function checkIndividual(){
 		else if (rollValue.langth==="")
 			alert("Please enter a valid Roll Number");
 			else if(isNaN(ageValue))
-			alert("Please enter a valid Age");
+			{	
+				alert("Please enter a valid Age"); 
+			 	//document.getElementById("age").setAttribute("abled", true);
+			}
 			else if(ageValue.length===0)
 				alert("Pleaseenter a valid age");
 			else if (ageValue<6)
@@ -785,7 +784,6 @@ function levelDisplay(){
 
 function indEventDisplay(){
   if(confirm("Are you sure that the given Details are true? You cannot alter your details!")){
-	console.log('Displaying Events');
 
 	var age         	=   document.getElementById("age");
 	var gender        	=   document.getElementById("gender");
@@ -797,41 +795,47 @@ function indEventDisplay(){
 	var catValue		=	category.value;
 	var mrlevelValue	=	mrlevel.value;
 	var vilevelValue	=	vilevel.value;
-	var eventsClass     =   Parse.Object.extend("EVENTS");
-	var container       =   document.getElementById('eventRow');
-    var query           =   new Parse.Query(eventsClass);
-	query.equalTo("GENDER", genderValue);
-    query.lessThanOrEqualTo("AGE_MIN", parseInt(ageValue));
-    query.greaterThanOrEqualTo("AGE_MAX", parseInt(ageValue));
-    query.equalTo("D_Category", catValue);
-	if(catValue == "MR") {
-        query.equalTo("D_Level_1_2_3", parseInt(mrlevelValue));
-		console.log(parseInt(mrlevelValue));
-    } else if (catValue == "VI") {
-        query.equalTo("D_Level_1_2_3", parseInt(vilevelValue));
-		console.log(parseInt(vilevelValue));
-    }
-	query.limit(1000);
-	query.find({
-        success:function(results) {
-			console.log('Successfully Retrieved');
-			console.log(results);
-			console.log(results.length);
-			while (container.hasChildNodes()) {
-                container.removeChild(container.lastChild);
-            }
-			populateEventCellWithEvents(results);
-        }, 
-        error: function(error) {
-            console.log('Failure retrieveing events: ' + error.message );
-        }
-    });
 
-  document.getElementById("age").setAttribute("disabled", true);
-	document.getElementById("gender").setAttribute("disabled", true);
-	document.getElementById("category").setAttribute("disabled", true);
-	document.getElementById("mrlevel").setAttribute("disabled", true);
-	document.getElementById("vilevel").setAttribute("disabled", true);
+	if(ageValue != ""){
+
+		console.log('Displaying Events');
+
+		var eventsClass     =   Parse.Object.extend("EVENTS");
+		var container       =   document.getElementById('eventRow');
+	    var query           =   new Parse.Query(eventsClass);
+		query.equalTo("GENDER", genderValue);
+	    query.lessThanOrEqualTo("AGE_MIN", parseInt(ageValue));
+	    query.greaterThanOrEqualTo("AGE_MAX", parseInt(ageValue));
+	    query.equalTo("D_Category", catValue);
+		if(catValue == "MR") {
+	        query.equalTo("D_Level_1_2_3", parseInt(mrlevelValue));
+			console.log(parseInt(mrlevelValue));
+	    } else if (catValue == "VI") {
+	        query.equalTo("D_Level_1_2_3", parseInt(vilevelValue));
+			console.log(parseInt(vilevelValue));
+	    }
+		query.limit(1000);
+		query.find({
+	        success:function(results) {
+				console.log('Successfully Retrieved');
+				console.log(results);
+				console.log(results.length);
+				while (container.hasChildNodes()) {
+	                container.removeChild(container.lastChild);
+	            }
+				populateEventCellWithEvents(results);
+	        }, 
+	        error: function(error) {
+	            console.log('Failure retrieveing events: ' + error.message );
+	        }
+	    });
+
+	  //document.getElementById("age").setAttribute("disabled", true);
+		document.getElementById("gender").setAttribute("disabled", true);
+		document.getElementById("category").setAttribute("disabled", true);
+		document.getElementById("mrlevel").setAttribute("disabled", true);
+		document.getElementById("vilevel").setAttribute("disabled", true);
+	}else{alert("please enter your Details!");}
   }
 };
 
