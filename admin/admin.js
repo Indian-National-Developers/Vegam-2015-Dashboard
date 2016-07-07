@@ -74,21 +74,38 @@ function getEvents() {
 function schoolStudentRetrieval(){
 
     $('#studTable').empty();
-    $('#studTable').append(
-        "<thead><tr>"+
-        "<th width='4%'> No </th>"+
-        "<th width='4%'> # </th>"+
-        "<th width='12%'> Name </th>"+
-        "<th width='6%'> Roll No. </th>"+
-        "<th width='4%'> Age </th>"+
-        "<th width='6%'> Gender </th>"+
-        "<th width='7%'> Disability </th>"+
-        "<th width='7%'> D.Level</th>"+
-        "<th width='16%'> Event 1 </th>"+
-        "<th width='16%'> Event 2 </th>"+
-        "<th> School </th>"+
-        "</tr></thead><tbody>");
-
+    if(document.getElementById('userNameTextBox').value == "individual - chennai"){
+        $('#studTable').append(
+            "<thead><tr>"+
+            "<th width='4%'> No </th>"+
+            "<th width='4%'> # </th>"+
+            "<th width='12%'> Name </th>"+
+            "<th width='7%'> Phone </th>"+
+            "<th width='6%'> Roll No. </th>"+
+            "<th width='4%'> Age </th>"+
+            "<th width='6%'> Gender </th>"+
+            "<th width='7%'> Disability </th>"+
+            "<th width='7%'> D.Level</th>"+
+            "<th width='14%'> Event 1 </th>"+
+            "<th width='14%'> Event 2 </th>"+
+            "<th> School </th>"+
+            "</tr></thead><tbody>");
+    }else{
+        $('#studTable').append(
+            "<thead><tr>"+
+            "<th width='4%'> No </th>"+
+            "<th width='4%'> # </th>"+
+            "<th width='12%'> Name </th>"+
+            "<th width='6%'> Roll No. </th>"+
+            "<th width='4%'> Age </th>"+
+            "<th width='6%'> Gender </th>"+
+            "<th width='7%'> Disability </th>"+
+            "<th width='7%'> D.Level</th>"+
+            "<th width='14%'> Event 1 </th>"+
+            "<th width='14%'> Event 2 </th>"+
+            "<th> School </th>"+
+            "</tr></thead><tbody>");
+    }
     var schoolName = document.getElementById('userNameTextBox').value;
     $('#studTableDescription').html(schoolName);
 
@@ -118,7 +135,6 @@ function schoolStudentRetrieval(){
 };
 
 function eventStudentRetrieval() {
-
     $('#studTable').empty();
     $('#studTable').append(
         "<thead><tr>"+
@@ -209,7 +225,6 @@ function populateEvents(eventList) {
 };
 
 function populateStudentTable() {
-
 studentsList.forEach(function(stud, i) {
         var categ       =   stud.get('CATEGORY');
         var levl        =   stud.get('LEVEL');
@@ -229,21 +244,43 @@ studentsList.forEach(function(stud, i) {
             prefix      +=  levl == "1" ? "A" : "B";
         }
 
-        $('#studTable').append(
-            "<tr id='studRow" + (i+1) + "'>"+
-            "<td> " + (i+1) + " </td>"+
-            "<td> " + prefix + pad(stud.get('uniq'), 3) + " </td>"+
-            "<td> " + stud.get('USERNAME') + " </td>"+
-            "<td> " + stud.get('ROLLNUMBER') + " </td>"+
-            "<td> " + stud.get('AGE') + " </td>"+
-            "<td> " + stud.get('GENDER') + " </td>"+
-            "<td> " + categ +  " </td>"+
-            "<td> " + levelString + " </td>"+
-            "<td id='studRowEventA" + (i+1) + "'> - </td>"+
-            "<td id='studRowEventB" + (i+1) + "'> - </td>"+
-            "<td id='studRowSchool" + (i+1) + "'> - </td>"+
-            "</tr>");
-
+        var sc = document.getElementById('userNameTextBox').value;
+        console.log(sc);
+        if(sc=="individual - chennai"){
+            console.log("individual");
+            $('#studTable').append(
+                "<tr id='studRow" + (i+1) + "'>"+
+                "<td> " + (i+1) + " </td>"+
+                "<td> " + prefix + pad(stud.get('uniq'), 3) + " </td>"+
+                "<td> " + stud.get('USERNAME') + " </td>"+
+                "<td> " + stud.get('PHONE') + " </td>"+
+                "<td> " + stud.get('ROLLNUMBER') + " </td>"+
+                "<td> " + stud.get('AGE') + " </td>"+
+                "<td> " + stud.get('GENDER') + " </td>"+
+                "<td> " + categ +  " </td>"+
+                "<td> " + levelString + " </td>"+
+                "<td id='studRowEventA" + (i+1) + "'> - </td>"+
+                "<td id='studRowEventB" + (i+1) + "'> - </td>"+
+                "<td id='studRowSchool" + (i+1) + "'> - </td>"+
+                "</tr>");
+        }
+        else{
+            console.log("Other");
+            $('#studTable').append(
+                "<tr id='studRow" + (i+1) + "'>"+
+                "<td> " + (i+1) + " </td>"+
+                "<td> " + prefix + pad(stud.get('uniq'), 3) + " </td>"+
+                "<td> " + stud.get('USERNAME') + " </td>"+
+                "<td> " + stud.get('ROLLNUMBER') + " </td>"+
+                "<td> " + stud.get('AGE') + " </td>"+
+                "<td> " + stud.get('GENDER') + " </td>"+
+                "<td> " + categ +  " </td>"+
+                "<td> " + levelString + " </td>"+
+                "<td id='studRowEventA" + (i+1) + "'> - </td>"+
+                "<td id='studRowEventB" + (i+1) + "'> - </td>"+
+                "<td id='studRowSchool" + (i+1) + "'> - </td>"+
+                "</tr>");
+        }
         var eventObject = Parse.Object.extend("EVENTS");
 
         var eva = stud.get('event1');
